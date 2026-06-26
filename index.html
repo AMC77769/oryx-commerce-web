@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oryx Commerce — Built on experience. Sharpened by AI.</title>
+<meta name="description" content="Agencia especializada en desarrollo de tiendas Shopify, gestión de ecommerce y automatización con IA para marcas internacionales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+:root{
+  --bg:#0D0D0D;
+  --card:rgba(18,18,18,0.78);
+  --card2:rgba(24,24,24,0.86);
+  --green:#00C26E;
+  --green-dim:rgba(0,194,110,.1);
+  --green-glow:rgba(0,194,110,.22);
+  --white:#FFFFFF;
+  --gray:#888;
+  --gray2:rgba(255,255,255,.45);
+  --border:rgba(255,255,255,.07);
+  --radius:16px;
+  --radius-sm:10px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --nav-h:80px;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:var(--nav-h);
+}
+
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+::selection{background:var(--green);color:#0A0A0A}
+
+/* ── CANVAS PARTICLES ──────────────────── */
+#particles-canvas{
+  position:fixed;
+  inset:0;
+  width:100%;height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* ── GRADIENT OVERLAY ──────────────────── */
+#bg-gradient{
+  position:fixed;inset:0;
+  z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% -10%, rgba(0,194,110,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(0,194,110,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 90% 90%, rgba(0,100,50,.05) 0%, transparent 50%);
+}
+
+/* scan-line subtle overlay */
+#bg-gradient::after{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,.06) 2px,
+    rgba(0,0,0,.06) 4px
+  );
+  pointer-events:none;
+  opacity:.4;
+}
+
+/* all content above canvas */
+#preloader,#bottom-nav,.page-section,footer{position:relative;z-index:1}
+
+/* ── PRELOADER ─────────────────────────── */
+#preloader{
+  position:fixed;inset:0;background:#000;
+  z-index:9999;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:24px;
+}
+.pre-iso-wrap{position:relative}
+.pre-glow-ring{
+  position:absolute;
+  width:260px;height:260px;border-radius:50%;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(0,194,110,.45) 0%,rgba(0,194,110,.15) 40%,transparent 70%);
+  opacity:0;pointer-events:none;
+  will-change:opacity,transform;
+}
+.pre-iso-wrap img{
+  display:block;height:220px;width:auto;
+  mix-blend-mode:screen;
+  position:relative;z-index:1;
+  will-change:transform;
+}
+.pre-bar{
+  width:200px;height:1px;background:var(--border);
+  overflow:hidden;position:relative;
+}
+.pre-bar::after{
+  content:'';position:absolute;left:-100%;top:0;bottom:0;width:100%;
+  background:var(--green);
+  animation:bar-fill 1.4s var(--ease) .2s forwards;
+}
+@keyframes bar-fill{to{left:0}}
+
+/* ── BOTTOM NAV ────────────────────────── */
+#bottom-nav{
+  position:fixed;bottom:16px;left:50%;
+  transform:translateX(-50%);
+  width:auto;max-width:calc(100vw - 24px);
+  height:auto;
+  background:rgba(13,13,13,.94);
+  backdrop-filter:blur(28px) saturate(180%);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  box-shadow:0 8px 32px rgba(0,0,0,.55),0 0 0 1px rgba(0,194,110,.04);
+  z-index:500;
+  display:flex;align-items:center;
+  padding:6px 8px;gap:2px;
+}
+.nav-tab{
+  flex:none;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;
+  padding:8px 12px;border-radius:14px;
+  cursor:pointer;transition:background .2s,color .2s;
+  color:var(--gray);border:none;background:transparent;
+  font-family:'Inter',sans-serif;
+  text-decoration:none;min-width:50px;
+}
+.nav-tab svg{width:19px;height:19px;transition:color .2s;flex-shrink:0}
+.nav-tab span{font-size:9.5px;font-weight:500;letter-spacing:.01em;transition:color .2s}
+.nav-tab.active{color:var(--white);background:rgba(255,255,255,.07)}
+.nav-tab:hover{background:rgba(255,255,255,.05)}
+.nav-cta-btn{
+  background:var(--green);color:#0A0A0A;
+  font-weight:700;font-size:12px;
+  padding:10px 16px;border-radius:14px;
+  border:none;cursor:pointer;
+  font-family:'Inter',sans-serif;
+  white-space:nowrap;flex-shrink:0;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  text-decoration:none;
+  display:flex;align-items:center;
+  margin-left:4px;
+}
+.nav-cta-btn:hover{background:#00db7a;transform:translateY(-1px);box-shadow:0 4px 18px rgba(0,194,110,.35)}
+
+/* ── PAGE SECTIONS ─────────────────────── */
+.page-section{
+  padding:60px 20px;
+  scroll-margin-top:0;
+}
+.page-section:first-of-type{padding-top:0}
+
+/* ── SHARED ────────────────────────────── */
+.section-header{text-align:center;margin-bottom:36px}
+.section-header h2{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(26px,5.5vw,42px);
+  font-weight:700;line-height:1.1;
+  letter-spacing:-.025em;margin-bottom:12px;
+}
+.section-header p{
+  font-size:15px;color:var(--gray2);
+  line-height:1.65;max-width:480px;margin:0 auto;
+}
+.acc{color:var(--green)}
+
+.btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--green);color:#0A0A0A;
+  font-weight:700;font-size:15px;
+  padding:16px 28px;border-radius:var(--radius-sm);
+  border:none;cursor:pointer;font-family:'Inter',sans-serif;
+  transition:all .25s var(--ease);text-decoration:none;
+  position:relative;overflow:hidden;
+}
+.btn-primary::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);
+  transform:translateX(-100%);
+  transition:transform .55s ease;
+}
+.btn-primary:hover::after{transform:translateX(100%)}
+.btn-primary:hover{background:#00db7a;transform:translateY(-2px);box-shadow:0 14px 36px var(--green-glow)}
+.btn-primary svg{transition:transform .2s;position:relative;z-index:1}
+.btn-primary:hover svg{transform:translateX(4px)}
+
+/* scrollbar */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--green);border-radius:2px}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(32px) scale(0.97);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal-d1{transition-delay:.1s}
+.reveal-d2{transition-delay:.18s}
+.reveal-d3{transition-delay:.26s}
+.reveal-d4{transition-delay:.34s}
+
+/* ── INICIO / HERO ─────────────────────── */
+#sec-inicio{
+  min-height:calc(100svh - var(--nav-h));
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:clamp(80px,14vh,160px) 20px 48px;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;width:900px;height:700px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(0,194,110,.11) 0%,rgba(0,194,110,.03) 40%,transparent 70%);
+  top:-120px;right:-220px;pointer-events:none;opacity:.85;
+}
+.hero-glow2{
+  position:absolute;width:500px;height:400px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(0,194,110,.06) 0%,transparent 65%);
+  bottom:-80px;left:-100px;pointer-events:none;opacity:.7;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black 10%,transparent);
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:2}
+
+.hero-h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:clamp(34px,7vw,68px);
+  line-height:1.06;letter-spacing:-.025em;
+  margin-bottom:20px;
+  perspective:1200px;
+}
+.word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
+.word-inner{
+  display:inline-block;
+  transform:translateY(115%) rotateX(-14deg);
+  will-change:transform;
+  transform-origin:bottom center;
+}
+.hero-p{font-size:16px;color:var(--gray2);max-width:520px;line-height:1.65;margin-bottom:32px;opacity:0}
+.hero-btns{display:flex;align-items:center;gap:16px;flex-wrap:wrap;opacity:0;margin-bottom:48px}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--white);font-size:15px;font-weight:500;
+  padding:16px 0;border-bottom:1px solid var(--border);
+  transition:all .2s;
+}
+.btn-ghost:hover{color:var(--green);border-color:var(--green)}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:var(--border);
+  border-radius:var(--radius);overflow:hidden;
+}
+.h-stat{
+  background:var(--card);padding:20px;
+  opacity:0;transform:translateY(18px);
+  position:relative;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+.h-stat::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--green),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .7s var(--ease);
+}
+.h-stat.lit::after{transform:scaleX(1)}
+.h-stat-n{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;margin-bottom:4px}
+.h-stat-n .sg{color:var(--green)}
+.h-stat-l{font-size:12px;color:var(--gray);line-height:1.4}
+
+/* ── HERO BRAND MARK ───────────────────── */
+.hero-brand{
+  position:absolute;top:0;left:0;right:0;z-index:3;
+  display:flex;align-items:center;gap:14px;
+  padding:22px 28px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  opacity:0;
+}
+.hb-iso{height:34px;width:auto;display:block;flex-shrink:0}
+.hb-divider{width:1px;height:26px;background:rgba(255,255,255,.14);flex-shrink:0}
+.hb-text{display:flex;flex-direction:column;gap:3px}
+.hb-wordmark{height:14px;width:auto;display:block}
+.hb-sub{font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--gray)}
+
+/* ── HERO DECORATIVE ISOTIPO ───────────── */
+.hero-iso-bg{
+  position:absolute;right:-4%;top:50%;
+  width:min(560px,58vw);height:auto;
+  opacity:0;pointer-events:none;z-index:0;
+}
+.hero-iso-bg img{
+  width:100%;height:auto;display:block;
+  filter:drop-shadow(0 0 18px rgba(0,194,110,.45)) drop-shadow(0 0 55px rgba(0,194,110,.18));
+  animation:iso-glow 4.5s ease-in-out infinite alternate;
+}
+@keyframes iso-glow{
+  from{filter:drop-shadow(0 0 18px rgba(0,194,110,.45)) drop-shadow(0 0 55px rgba(0,194,110,.18))}
+  to  {filter:drop-shadow(0 0 28px rgba(0,194,110,.7))  drop-shadow(0 0 80px rgba(0,194,110,.3))}
+}
+@media(max-width:768px){
+  .hero-iso-bg{width:min(320px,80vw);right:-8%;top:30%}
+}
+
+/* Ticker */
+.ticker-outer{
+  overflow:hidden;position:relative;
+  padding:20px 0;margin-top:40px;
+  border-top:1px solid var(--border);
+}
+.ticker-outer::before,.ticker-outer::after{
+  content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;
+}
+.ticker-outer::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.ticker-outer::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent)}
+.ticker-track{display:flex;width:max-content;animation:tick 28s linear infinite}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{
+  display:flex;align-items:center;gap:10px;
+  padding:0 24px;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gray);white-space:nowrap;
+}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--green)}
+
+/* ── PROBLEMAS ─────────────────────────── */
+#sec-problemas{background:transparent}
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bento-card{
+  background:var(--card);border-radius:var(--radius);
+  padding:22px 20px;overflow:hidden;position:relative;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  cursor:default;transition:background .25s, box-shadow .35s;
+  border:1px solid rgba(255,255,255,.05);
+}
+.bento-card:hover{
+  background:var(--card2);
+  box-shadow:0 0 0 1px rgba(0,194,110,.18), 0 8px 32px rgba(0,194,110,.06);
+}
+.bento-card.wide{grid-column:1/-1}
+
+.bento-visual{
+  height:110px;border-radius:var(--radius-sm);
+  overflow:hidden;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.025);border:1px solid var(--border);
+}
+.bento-card h3{font-size:15px;font-weight:700;margin-bottom:8px;line-height:1.3}
+.bento-card p{font-size:13px;color:var(--gray2);line-height:1.6}
+
+/* bento visuals */
+.vis-browser{width:88%;background:#1a1a1a;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+.vis-browser-bar{height:24px;background:#222;display:flex;align-items:center;padding:0 10px;gap:5px}
+.vis-dot{width:7px;height:7px;border-radius:50%}
+.vis-browser-body{padding:10px;display:flex;flex-direction:column;gap:5px}
+.vis-sk{height:6px;border-radius:3px;background:rgba(255,255,255,.07)}
+.vis-sk.hl{background:rgba(0,194,110,.22);width:60%}
+
+.vis-chart{display:flex;align-items:flex-end;gap:6px;height:70px;padding:0 12px}
+.vis-bar{flex:1;border-radius:3px 3px 0 0;background:rgba(255,255,255,.09);transition:height .3s}
+.vis-bar.on{background:var(--green)}
+
+.vis-gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.vis-gauge{
+  width:76px;height:38px;border:2.5px solid rgba(255,255,255,.1);
+  border-bottom:none;border-radius:38px 38px 0 0;position:relative;overflow:hidden;
+}
+.vis-needle{
+  position:absolute;bottom:0;left:50%;width:2px;height:32px;
+  background:rgba(255,80,80,.75);transform-origin:bottom center;
+  transform:rotate(-25deg) translateX(-50%);border-radius:2px;
+}
+.vis-gauge-label{font-size:10px;color:rgba(255,80,80,.8);font-weight:600}
+
+.vis-apps{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:0 8px}
+.vis-app{
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(255,255,255,.05);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.vis-badge-red{
+  background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.28);
+  border-radius:6px;padding:3px 8px;font-size:10px;font-weight:600;
+  color:rgba(255,80,80,.85);white-space:nowrap;
+}
+
+.vis-email{
+  width:86%;background:#1c1c1c;border-radius:8px;
+  padding:10px 12px;border:1px solid rgba(255,255,255,.06);font-size:11px;
+}
+.vis-email-from{color:var(--gray);margin-bottom:5px}
+.vis-email-subj{font-weight:600;margin-bottom:4px}
+.vis-email-prev{color:var(--gray);font-size:10px;line-height:1.4}
+
+.vis-steps-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 12px;width:100%}
+.vis-steps{display:flex;align-items:center;gap:4px;width:100%}
+.vis-step{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.09)}
+.vis-step.done{background:var(--green)}
+.vis-step.warn{background:rgba(255,160,0,.55)}
+.vis-warn-txt{font-size:10px;color:rgba(255,160,0,.8);font-weight:600}
+
+/* ── SOLUCIONES ────────────────────────── */
+#sec-soluciones{background:transparent}
+.sol-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:900px){.sol-cards{grid-template-columns:repeat(3,1fr)}}
+.sol-card{
+  background:var(--card);border-radius:var(--radius);
+  overflow:hidden;transition:background .25s,box-shadow .35s,transform .25s;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  border:1px solid rgba(255,255,255,.05);
+}
+.sol-card:hover{
+  background:var(--card2);transform:translateY(-2px);
+  box-shadow:0 0 0 1px rgba(0,194,110,.18),0 12px 40px rgba(0,194,110,.08);
+}
+.sol-visual{
+  height:120px;background:rgba(255,255,255,.02);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.sol-body{padding:18px 18px 20px}
+.sol-body h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.25}
+.sol-body p{font-size:12.5px;color:var(--gray2);line-height:1.6}
+.sol-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--green);
+  margin-bottom:8px;
+}
+.sol-tag::before{content:'';width:14px;height:1px;background:var(--green)}
+
+/* ── sol visual helpers ── */
+.sv2-ab{display:flex;align-items:center;gap:8px;padding:0 12px;width:90%}
+.sv2-box{flex:1;border-radius:7px;padding:8px 6px;text-align:center}
+.sv2-box-lbl{font-size:8px;font-weight:700;margin-bottom:5px}
+.sv2-box-btn{height:16px;border-radius:3px}
+.sv2-box-rate{font-size:9px;font-weight:700;margin-top:5px}
+.sv2-vs{font-size:8px;color:var(--gray);font-weight:600;flex-shrink:0}
+.sv2-cart{width:86%;background:#1b1b1b;border-radius:8px;padding:9px 11px;border:1px solid rgba(255,255,255,.07);font-size:9px}
+.sv2-cart-hdr{color:var(--gray);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;font-size:8px}
+.sv2-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.sv2-thumb{width:14px;height:14px;background:rgba(255,255,255,.1);border-radius:2px;flex-shrink:0}
+.sv2-upsell{display:flex;justify-content:space-between;align-items:center;background:rgba(0,194,110,.08);border-radius:4px;padding:4px 7px;border:1px solid rgba(0,194,110,.22);margin-bottom:5px}
+.sv2-total{text-align:right;font-size:10px;font-weight:700;color:var(--green)}
+.sv2-stack{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:0 8px}
+.sv2-app{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px}
+.sv2-app.dead{opacity:.22;position:relative}
+.sv2-badge-g{background:rgba(0,194,110,.1);border:1px solid rgba(0,194,110,.28);border-radius:6px;padding:3px 9px;font-size:10px;font-weight:600;color:rgba(0,194,110,.9)}
+.sv2-gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:7px}
+.sv2-gauge{width:80px;height:40px;border:2.5px solid rgba(0,194,110,.55);border-bottom:none;border-radius:40px 40px 0 0;position:relative;overflow:hidden}
+.sv2-needle{position:absolute;bottom:0;left:calc(50% - 1px);width:2px;height:34px;background:var(--green);transform-origin:bottom center;transform:rotate(28deg);border-radius:2px}
+.sv2-gauge-lbl{font-size:10px;color:var(--green);font-weight:700}
+
+/* ── ROAS dashboard illustration ── */
+.sv-roas-dash{width:88%;display:flex;flex-direction:column;gap:8px}
+.sv-roas-hdr{display:flex;align-items:center;gap:8px}
+.sv-roas-kpi{font-size:8px;color:var(--gray2);font-weight:600;letter-spacing:.07em;text-transform:uppercase}
+.sv-roas-big{font-size:21px;font-weight:800;color:#fff;line-height:1}
+.sv-roas-x{font-size:10px;color:var(--green);font-weight:700;margin-left:1px}
+.sv-roas-tag{font-size:8px;background:rgba(0,194,110,.1);border:1px solid rgba(0,194,110,.28);border-radius:4px;padding:1px 6px;color:rgba(0,194,110,.9);opacity:0;white-space:nowrap}
+.sv-roas-bars{display:flex;align-items:flex-end;gap:5px;height:52px;width:100%}
+.sv-roas-bars .vis-bar{flex:1;border-radius:3px 3px 0 0}
+
+/* ── SOL VISUAL — initial hidden states (GSAP drives all loops) ── */
+.sv-shopify .vis-browser{opacity:0}
+.sv-ab .sv2-box,.sv-ab .sv2-box-rate{opacity:0}
+.sv-ab .sv2-box-btn{transform:scaleY(0);transform-origin:bottom}
+.sv-apps .sv2-stack>*{opacity:0;transform:scale(.65)}
+.sv-margins .sv-mbar{transform:scaleY(0);transform-origin:bottom}
+.sv-margins .sv-mlbl{opacity:0}
+.sv-cart .sv2-cart,.sv-cart .sv2-row,.sv-cart .sv2-upsell,.sv-cart .sv2-total{opacity:0}
+.sv-speed .sv2-needle-b,.sv-speed .sv2-needle{opacity:0}
+.sv-speed .sv2-needle{transform:rotate(-80deg);transform-origin:bottom center}
+.sv-speed .sv2-gauge-lbl{opacity:0}
+
+/* ── SERVICIOS ─────────────────────────── */
+.srv-body{display:flex;flex-direction:column;gap:40px}
+.srv-cat-hdr{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.srv-cat-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);white-space:nowrap}
+.srv-cat-line{flex:1;height:1px;background:var(--border)}
+.srv-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:600px){.srv-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.srv-grid{grid-template-columns:repeat(4,1fr)}}
+.srv-grid-2{grid-template-columns:1fr 1fr}
+@media(min-width:600px){.srv-grid-2{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.srv-grid-2{grid-template-columns:repeat(2,minmax(0,320px))}}
+.srv-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:16px;display:flex;flex-direction:column;gap:9px;
+  transition:border-color .2s,background .2s;
+}
+.srv-card:hover{border-color:rgba(0,194,110,.28);background:rgba(0,194,110,.04)}
+.srv-ico{
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  background:rgba(0,194,110,.08);border:1px solid rgba(0,194,110,.15);
+  display:flex;align-items:center;justify-content:center;color:var(--green);
+}
+.srv-card h4{font-size:13px;font-weight:700;color:#fff;line-height:1.2;margin:0}
+.srv-card p{font-size:11.5px;color:var(--gray2);line-height:1.55;margin:0;flex:1}
+
+/* ── METODOLOGÍA ───────────────────────── */
+.meto-wrap{display:grid;grid-template-columns:1fr 1.35fr;gap:52px;align-items:start}
+@media(max-width:720px){.meto-wrap{grid-template-columns:1fr;gap:28px}}
+.meto-intro{font-size:14.5px;color:var(--gray2);line-height:1.65;margin:14px 0 32px;max-width:310px}
+.meto-tabs{display:flex;flex-direction:column;gap:4px}
+.meto-tab{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:13px 14px;border-radius:11px;
+  border:1px solid transparent;cursor:pointer;
+  text-align:left;background:none;color:var(--gray2);
+  transition:background .2s,border-color .2s,color .2s;width:100%;
+}
+.meto-tab:hover{background:rgba(255,255,255,.04);color:#fff}
+.meto-tab.active{background:rgba(0,194,110,.07);border-color:rgba(0,194,110,.2);color:#fff}
+.meto-tab-ico{
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray);transition:all .2s;margin-top:1px;
+}
+.meto-tab.active .meto-tab-ico{background:rgba(0,194,110,.12);border-color:rgba(0,194,110,.22);color:var(--green)}
+.meto-tab-body{display:flex;flex-direction:column;gap:2px}
+.meto-tab-lbl{font-size:13.5px;font-weight:600;line-height:1.2}
+.meto-tab-wk{font-size:11px;color:var(--gray);font-weight:400}
+.meto-tab.active .meto-tab-wk{color:rgba(0,194,110,.65)}
+
+.meto-right{position:sticky;top:80px}
+.meto-panel{display:none}
+.meto-panel.active{display:flex;flex-direction:column}
+.meto-pcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.meto-pvis{
+  height:175px;background:rgba(255,255,255,.02);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.meto-pbody{padding:22px 22px 24px}
+.meto-ptag{font-size:9px;font-weight:700;color:var(--green);letter-spacing:.08em;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.meto-ptag::before{content:'';width:18px;height:1.5px;background:var(--green);border-radius:2px}
+.meto-pcard h3{font-size:17px;font-weight:700;margin-bottom:8px;line-height:1.25}
+.meto-pcard p{font-size:13px;color:var(--gray2);line-height:1.65}
+
+/* panel illustrations */
+.mp-ob{width:84%;display:flex;flex-direction:column;gap:10px}
+.mp-ob-list{display:flex;flex-direction:column;gap:6px}
+.mp-ob-row{display:flex;align-items:center;gap:9px;font-size:11px;color:rgba(255,255,255,.7)}
+.mp-ob-chk{width:16px;height:16px;border-radius:50%;background:rgba(0,194,110,.12);border:1px solid rgba(0,194,110,.35);
+  display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--green);flex-shrink:0}
+.mp-ob-badge{background:rgba(0,194,110,.1);border:1px solid rgba(0,194,110,.25);border-radius:6px;
+  padding:5px 12px;font-size:10px;font-weight:700;color:rgba(0,194,110,.9);display:inline-block;align-self:flex-start}
+
+.mp-cro{width:84%;display:flex;flex-direction:column;gap:5px}
+.mp-cro-stage{display:grid;grid-template-columns:56px 1fr 36px;align-items:center;gap:7px;font-size:10px}
+.mp-cro-lbl{color:var(--gray2);text-align:right}
+.mp-cro-bar{height:7px;border-radius:4px;background:rgba(0,194,110,.45);transition:width .4s}
+.mp-cro-stage.bad .mp-cro-bar{background:rgba(255,80,80,.5)}
+.mp-cro-stage.bad .mp-cro-num{color:rgba(255,80,80,.85)}
+.mp-cro-num{color:rgba(255,255,255,.8);font-weight:600}
+.mp-cro-fix{font-size:10px;color:rgba(0,194,110,.85);margin-top:2px;text-align:right;font-weight:600}
+
+.mp-dis{display:flex;gap:8px;align-items:stretch;width:88%}
+.mp-dis-before,.mp-dis-after{flex:1;border-radius:8px;padding:8px 9px;display:flex;flex-direction:column;gap:5px}
+.mp-dis-before{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07)}
+.mp-dis-after{background:rgba(0,194,110,.05);border:1px solid rgba(0,194,110,.18)}
+.mp-dis-lbl{font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.mp-dis-before .mp-dis-lbl{color:var(--gray)}
+.mp-dis-after .mp-dis-lbl{color:var(--green)}
+.mp-dis-sk{height:5px;border-radius:3px;background:rgba(255,255,255,.07);margin-bottom:2px}
+.mp-dis-btn{height:14px;border-radius:3px;background:rgba(255,255,255,.1);width:70%}
+.mp-dis-after .mp-dis-btn{background:rgba(0,194,110,.55)}
+.mp-dis-arrow{font-size:18px;color:var(--gray);align-self:center;flex-shrink:0}
+
+.mp-dev{width:84%;display:flex;flex-direction:column;gap:10px}
+.mp-cwv-row{display:flex;gap:8px}
+.mp-cwv{flex:1;background:rgba(0,194,110,.07);border:1px solid rgba(0,194,110,.18);border-radius:7px;
+  padding:7px 6px;text-align:center}
+.mp-cwv-metric{font-size:8.5px;color:var(--gray2);margin-bottom:3px}
+.mp-cwv-val{font-size:13px;font-weight:700;color:var(--green)}
+.mp-dev-deploy{display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(255,255,255,.75)}
+.mp-dev-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;
+  box-shadow:0 0 6px var(--green)}
+.mp-dev-ps{font-size:10px;color:var(--gray);font-weight:600}
+
+/* ── CALCULADORA ───────────────────────── */
+#sec-calculadora{background:transparent}
+/* ── CALCULADORA ───────────────────────── */
+.calc-wrap{
+  background:var(--card);
+  border-radius:var(--radius);
+  overflow:hidden;
+  margin-bottom:20px;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+.calc-inner{
+  display:grid;
+  grid-template-columns:1fr;
+}
+@media(min-width:640px){
+  .calc-inner{grid-template-columns:1fr 1fr}
+}
+.calc-left{
+  padding:28px 24px;
+  border-right:none;
+  border-bottom:1px solid var(--border);
+}
+@media(min-width:640px){
+  .calc-left{border-right:1px solid var(--border);border-bottom:none}
+}
+.calc-right{
+  padding:28px 24px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.calc-sliders{display:flex;flex-direction:column;gap:22px}
+.calc-row-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.calc-row-lbl{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500}
+.ci{
+  width:30px;height:30px;border-radius:8px;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray);flex-shrink:0;
+}
+.calc-row-val{font-size:15px;font-weight:700}
+.calc-slider{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:3px;border-radius:2px;
+  background:rgba(255,255,255,.1);outline:none;cursor:pointer;
+}
+.calc-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--white);box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:pointer;
+  transition:transform .15s;
+}
+.calc-slider::-webkit-slider-thumb:hover{transform:scale(1.2)}
+.calc-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--white);border:none;cursor:pointer}
+
+/* right panel */
+.calc-result{
+  background:var(--card2);
+  border-radius:var(--radius-sm);
+  padding:22px 20px;
+  flex:1;
+}
+.calc-result-label{
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gray2);margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.calc-result-label::before{content:'↗';color:var(--green);font-size:14px}
+.calc-revenue{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(34px,5vw,52px);
+  font-weight:700;color:var(--green);line-height:1;margin-bottom:10px;
+}
+.calc-result-desc{font-size:13px;color:var(--gray2);line-height:1.55}
+.calc-score{
+  background:rgba(255,160,0,.07);border:1px solid rgba(255,160,0,.18);
+  border-radius:var(--radius-sm);padding:16px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.calc-score-tag{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,160,0,.75);display:flex;align-items:center;gap:6px;margin-bottom:4px;
+}
+.calc-score-tag::before{content:'⚡';font-size:12px}
+.calc-score-lbl{font-size:14px;font-weight:600;color:rgba(255,180,0,.9)}
+.calc-score-num{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:rgba(255,180,0,.9)}
+
+/* ── FAQ ───────────────────────────────── */
+#sec-faqs{background:transparent}
+.faq-card{background:var(--card);border-radius:var(--radius);padding:20px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.faq-messages{display:flex;flex-direction:column;gap:12px}
+.faq-q{
+  display:flex;justify-content:flex-end;align-items:center;
+  gap:10px;cursor:pointer;
+}
+.faq-q-bubble{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:18px 18px 4px 18px;
+  padding:12px 18px;font-size:14px;font-weight:500;
+  max-width:80%;transition:all .2s;color:var(--white);
+}
+.faq-q.active .faq-q-bubble,.faq-q:hover .faq-q-bubble{
+  background:rgba(0,194,110,.1);border-color:rgba(0,194,110,.28);
+}
+.faq-q-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--card2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray2);flex-shrink:0;font-size:18px;line-height:1;
+  transition:all .2s;
+}
+.faq-q.active .faq-q-btn{background:var(--green-dim);border-color:rgba(0,194,110,.3);color:var(--green)}
+.faq-a{display:none;align-items:flex-start;gap:10px}
+.faq-a.show{display:flex}
+.faq-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:#000;border:1px solid rgba(255,255,255,.1);
+  overflow:hidden;flex-shrink:0;
+}
+.faq-a-bubble{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:4px 18px 18px 18px;
+  padding:14px 18px;font-size:14px;color:var(--gray2);
+  line-height:1.65;max-width:82%;
+}
+
+/* ── CONTACTO ──────────────────────────── */
+#sec-contacto{max-width:580px;margin-left:auto;margin-right:auto}
+.cta-sec-hdr{text-align:center;margin-bottom:32px}
+.cta-sec-hdr h2{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(28px,6vw,44px);font-weight:700;
+  letter-spacing:-.025em;margin-bottom:10px;
+}
+.cta-sec-hdr p{font-size:15px;color:var(--gray2);line-height:1.65;max-width:400px;margin:0 auto}
+.cta-form-card{
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;padding:32px 28px 28px;
+}
+.c-form{display:flex;flex-direction:column;gap:14px}
+.f-group{display:flex;flex-direction:column;gap:6px}
+.f-group label{font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.f-group input,.f-group select,.f-group textarea{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;color:white;font-family:'Inter',sans-serif;
+  font-size:14.5px;padding:13px 15px;outline:none;width:100%;
+  transition:border-color .2s,background .2s;-webkit-appearance:none;appearance:none;
+}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{
+  border-color:rgba(0,194,110,.5);background:rgba(0,194,110,.03);
+}
+.f-group input::placeholder,.f-group textarea::placeholder{color:rgba(255,255,255,.2)}
+.f-group textarea{resize:vertical;min-height:88px}
+.f-group select{cursor:pointer;color:rgba(255,255,255,.38)}
+.f-group select.has-val{color:white}
+.f-group select option{background:#1a1a1a;color:white}
+/* Phone row */
+.f-phone-row{display:flex;gap:8px;align-items:stretch}
+.f-phone-prefix{
+  display:flex;align-items:center;gap:6px;flex-shrink:0;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:13px 14px;font-size:14px;color:rgba(255,255,255,.7);
+  white-space:nowrap;letter-spacing:.02em;user-select:none;
+}
+.f-phone-row input{flex:1;min-width:0}
+/* Buttons */
+.f-btns{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.f-submit{
+  background:var(--green);color:#0A0A0A;font-weight:700;font-size:15px;
+  padding:15px 24px;border:none;border-radius:50px;cursor:pointer;width:100%;
+  font-family:'Inter',sans-serif;letter-spacing:.01em;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s var(--ease);opacity:.38;pointer-events:none;
+}
+.f-submit.ready{opacity:1;pointer-events:auto}
+.f-submit.ready:hover{background:#00db7a;transform:translateY(-2px);box-shadow:0 10px 28px var(--green-glow)}
+.f-submit-wa{
+  background:#25D366;color:#fff;font-weight:700;font-size:14.5px;
+  padding:14px 24px;border:none;border-radius:50px;cursor:pointer;width:100%;
+  font-family:'Inter',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s var(--ease);opacity:.32;pointer-events:none;
+}
+.f-submit-wa.ready{opacity:1;pointer-events:auto}
+.f-submit-wa.ready:hover{background:#1fb956;transform:translateY(-2px)}
+.f-note{font-size:11px;color:rgba(255,255,255,.25);text-align:center;line-height:1.5;margin-top:6px}
+/* Social proof */
+.f-proof{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  margin-top:22px;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);
+}
+.f-avatars{display:flex}
+.f-av{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid #0d0d0d;overflow:hidden;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff;margin-left:-7px;
+}
+.f-avatars .f-av:first-child{margin-left:0}
+.f-proof-copy{font-size:12px;color:rgba(255,255,255,.5);line-height:1.35}
+.f-proof-copy strong{color:rgba(255,255,255,.8)}
+/* Success */
+.f-success{
+  display:none;flex-direction:column;align-items:center;text-align:center;gap:12px;
+  padding:48px 24px;background:var(--green-dim);
+  border:1px solid rgba(0,194,110,.22);border-radius:20px;
+}
+.f-success.show{display:flex}
+.f-success-icon{width:52px;height:52px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#0A0A0A}
+.f-success h3{font-size:20px;font-weight:700;color:var(--green)}
+.f-success p{font-size:14px;color:var(--gray2);max-width:240px}
+
+/* ── FOOTER ────────────────────────────── */
+#sec-footer{
+  padding:40px 20px 28px;
+  border-top:1px solid var(--border);
+  text-align:center;
+}
+.foot-brand{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:12px;
+}
+.foot-wordmark{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;font-size:18px;letter-spacing:.18em;
+}
+.foot-tagline{font-size:13px;color:var(--gray);margin-bottom:20px}
+.foot-links{
+  display:flex;align-items:center;justify-content:center;
+  gap:24px;flex-wrap:wrap;margin-bottom:24px;
+}
+.foot-links a{font-size:13px;color:rgba(255,255,255,.4);transition:color .2s}
+.foot-links a:hover{color:var(--white)}
+.foot-copy{font-size:12px;color:var(--gray)}
+.foot-copy .fg{color:var(--green)}
+
+/* ── RESPONSIVE ────────────────────────── */
+@media(min-width:600px){
+  .bento{grid-template-columns:repeat(3,1fr)}
+  .bento-card.wide{grid-column:span 2}
+  .hero-stats{grid-template-columns:repeat(4,1fr)}
+}
+@media(min-width:768px){
+  .page-section{padding:80px 40px}
+  #sec-inicio{padding:80px 40px 48px}
+  .sol-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .calc-layout{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .calc-layout .calc-card{border-radius:var(--radius) 0 0 var(--radius)}
+  .calc-layout .calc-results-col{padding:24px 20px}
+  .f-row{grid-template-columns:1fr 1fr}
+}
+@media(min-width:1024px){
+  .page-section{padding:100px 64px}
+  #sec-inicio{padding:80px 64px 56px}
+  .bento{grid-template-columns:repeat(3,1fr)}
+  .sol-cards{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ── MOBILE OVERRIDES ───────────────────── */
+/* Nav overflow fix: hide labels on very small screens */
+@media(max-width:479px){
+  .nav-tab{min-width:40px;padding:8px 9px}
+  .nav-tab span{display:none}
+  .nav-cta-lg{display:none!important}
+  .nav-cta-sm{display:inline!important}
+  .nav-cta-btn{padding:9px 13px;font-size:11.5px}
+}
+/* Show full text on wider mobile/tablet */
+.nav-cta-sm{display:none}
+.nav-cta-lg{display:inline}
+
+/* Form card tighter on small phones */
+@media(max-width:479px){
+  .cta-form-card{padding:20px 16px 20px}
+  .f-phone-prefix{padding:12px 10px;font-size:13px}
+  .f-group label{font-size:10.5px}
+}
+/* Methodology sticky off on mobile */
+@media(max-width:719px){
+  .meto-right{position:static!important}
+}
+/* Hero buttons: stack on very small screens */
+@media(max-width:380px){
+  .hero-btns{flex-direction:column;align-items:flex-start;gap:12px}
+  .btn-primary{width:100%;justify-content:center}
+}
+/* Sol visual height on small screens */
+@media(max-width:480px){
+  .sol-visual{height:108px}
+  .bento-card{padding:14px 12px}
+}
+/* Ticker font */
+@media(max-width:480px){
+  .ticker-item{font-size:12px;padding:0 14px}
+}
+/* Calculator padding */
+@media(max-width:480px){
+  .calc-card{padding:20px 16px}
+  .calc-results-col{padding:16px}
+}
+/* FAQ container */
+@media(max-width:480px){
+  .faq-q-bubble,.faq-a-bubble{font-size:13px;padding:10px 13px}
+}
+
+/* ── LANGUAGE SWITCHER ────────────────── */
+#lang-sw{
+  position:fixed;bottom:calc(var(--nav-h) + 18px);right:16px;
+  z-index:490;
+  display:flex;gap:4px;align-items:center;
+  background:rgba(13,13,13,.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:50px;padding:5px 8px;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+  transition:opacity .2s;
+}
+#lang-sw.hidden{opacity:0;pointer-events:none}
+.lang-btn{
+  font-size:11px;font-weight:600;letter-spacing:.04em;
+  color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;
+  padding:4px 7px;border-radius:20px;font-family:'Inter',sans-serif;
+  transition:color .15s,background .15s;
+}
+.lang-btn:hover{color:#fff;background:rgba(255,255,255,.07)}
+.lang-btn.active{color:var(--green);background:rgba(0,194,110,.12)}
+</style>
+</head>
+<body>
+
+<!-- BG CANVAS + GRADIENT -->
+<canvas id="particles-canvas"></canvas>
+<div id="bg-gradient"></div>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pre-iso-wrap">
+    <div class="pre-glow-ring" id="pre-glow"></div>
+    <img id="pre-logo-img" src="assets/oryx-vertical.png" alt="Oryx Commerce">
+  </div>
+  <div class="pre-bar"></div>
+</div>
+
+<!-- ════════════ INICIO ════════════ -->
+<section id="sec-inicio" class="page-section">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-grid"></div>
+  <!-- Decorative background isotipo -->
+  <div class="hero-iso-bg" aria-hidden="true">
+    <img src="assets/oryx-isotipo-bg.png" onerror="this.src='assets/oryx-isotipo.png';this.style.mixBlendMode='screen'" alt="">
+  </div>
+  <!-- Brand mark — top fixed header position -->
+  <div class="hero-brand" id="hero-brand">
+    <img class="hb-iso" src="assets/oryx-isotipo-bg.png" alt="Oryx isotipo">
+    <div class="hb-divider"></div>
+    <div class="hb-text">
+      <img class="hb-wordmark" src="assets/oryx-wordmark.png" alt="ORYX">
+      <span class="hb-sub" data-i18n="hbSub">Agencia de Gestión de Ecommerce</span>
+    </div>
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-h1" id="hero-h1">
+      <span class="word-wrap"><span class="word-inner" data-i18n="heroL1">Hacemos que tu negocio</span></span><br>
+      <span class="word-wrap"><span class="word-inner" data-i18n="heroL2">venda más online, con la</span></span><br>
+      <span class="word-wrap"><span class="word-inner acc" data-i18n="heroL3">experiencia de quien</span></span><br>
+      <span class="word-wrap"><span class="word-inner acc" data-i18n="heroL4">ya lo ha hecho.</span></span>
+    </h1>
+    <p class="hero-p" id="hero-p" data-i18n="heroP">
+      Desarrollamos tiendas Shopify que convierten, gestionamos ecommerce con criterio real y aplicamos IA para acelerar lo que antes tardaba semanas.
+    </p>
+    <div class="hero-btns" id="hero-btns">
+      <a href="#sec-contacto" class="btn-primary">
+        <span data-i18n="heroCta">Hablemos de tu proyecto</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <a href="#sec-soluciones" class="btn-ghost">
+        <span data-i18n="heroGhost">Ver servicios</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats" id="hero-stats">
+      <div class="h-stat">
+        <div class="h-stat-n"><span class="counter" data-to="8">0</span><span class="sg">+</span></div>
+        <div class="h-stat-l" data-i18n="stat1">Años operando ecommerce propio</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-n"><span class="counter" data-to="120">0</span><span class="sg">+</span></div>
+        <div class="h-stat-l" data-i18n="stat2">Proyectos entregados</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-n"><span class="counter" data-to="3">0</span></div>
+        <div class="h-stat-l" data-i18n="stat3">Continentes UK · USA · CH</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-n"><span class="counter" data-to="94">0</span><span class="sg">%</span></div>
+        <div class="h-stat-l" data-i18n="stat4">Clientes que repiten</div>
+      </div>
+    </div>
+  </div>
+  <div class="ticker-outer">
+    <div class="ticker-track">
+      <div class="ticker-item"><span class="ticker-dot"></span>Shopify Development</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>CRO &amp; Conversión</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Automatización IA</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Email Marketing</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Shopify Plus</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Performance &amp; Velocidad</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Diseño de Ecommerce</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Gestión Recurrente</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Experiencia real · IA aplicada</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Shopify Development</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>CRO &amp; Conversión</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Automatización IA</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Email Marketing</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Shopify Plus</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Performance &amp; Velocidad</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Diseño de Ecommerce</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Gestión Recurrente</div>
+      <div class="ticker-item"><span class="ticker-dot"></span>Experiencia real · IA aplicada</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ SERVICIOS ════════════ -->
+<section id="sec-servicios" class="page-section">
+  <div class="section-header reveal">
+    <p class="section-tag">Servicios</p>
+    <h2>Todo lo que necesitas<br>para <span class="acc">vender más</span></h2>
+    <p>Desde el diseño hasta las campañas. Cada servicio pensado para que tu tienda crezca sin depender de la suerte.</p>
+  </div>
+
+  <div class="srv-body">
+
+    <!-- ── Creación ── -->
+    <div class="reveal">
+      <div class="srv-cat-hdr"><span class="srv-cat-lbl">Creación</span><div class="srv-cat-line"></div></div>
+      <div class="srv-grid">
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h4>Diseño y desarrollo web</h4>
+          <p>Sitios corporativos y landing pages que comunican profesionalismo desde el primer segundo, pensados para convertir visitas en clientes.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+          <h4>Creación de tienda Shopify</h4>
+          <p>Tu ecommerce construido desde cero, optimizado para vender desde el día uno — no solo para verse bien.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+          <h4>Migración a Shopify</h4>
+          <p>¿Vienes de otra plataforma? Migramos tu tienda completa — productos, clientes e historial — sin perder ventas ni SEO.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h4>Auditoría de tienda</h4>
+          <p>Diagnóstico a fondo: qué está frenando tus ventas y qué cambios tendrían más impacto, con prioridades claras.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Gestión recurrente ── -->
+    <div class="reveal">
+      <div class="srv-cat-hdr"><span class="srv-cat-lbl">Gestión recurrente</span><div class="srv-cat-line"></div></div>
+      <div class="srv-grid">
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+          <h4>Mantenimiento mensual</h4>
+          <p>Tu tienda siempre actualizada, segura y funcionando — sin que tengas que pensar en ello.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+          <h4>Optimización de conversión (CRO)</h4>
+          <p>Mejoras continuas basadas en datos reales de comportamiento, no en suposiciones, para que cada visita valga más.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <h4>Gestión de campañas de Ads</h4>
+          <p>Meta, Google y TikTok Ads gestionados para traer tráfico que realmente compra, no solo clics.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <h4>Email marketing y automatización</h4>
+          <p>Flujos de email que venden mientras duermes: carritos abandonados, bienvenida, recompra — el canal más rentable del ecommerce.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h4>SEO continuo</h4>
+          <p>Posicionamiento orgánico que crece mes a mes, para depender menos de la publicidad pagada.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <h4>Gestión de catálogo y contenido</h4>
+          <p>Fichas de producto e imágenes optimizadas para conversión, con apoyo de IA para producir más rápido sin perder calidad.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Automatización con IA ── -->
+    <div class="reveal">
+      <div class="srv-cat-hdr"><span class="srv-cat-lbl">Automatización con IA</span><div class="srv-cat-line"></div></div>
+      <div class="srv-grid">
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <h4>Automatización de atención al cliente</h4>
+          <p>Respuestas rápidas y consistentes, incluso fuera de horario, sin perder el toque humano.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+          <h4>Automatización de procesos internos</h4>
+          <p>Inventario, pedidos e informes conectados y funcionando solos, para dedicar tu tiempo a crecer.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <h4>Generación de contenido con IA</h4>
+          <p>Producción de contenido de producto a mayor velocidad, manteniendo siempre el control y la calidad final.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Expansión ── -->
+    <div class="reveal">
+      <div class="srv-cat-hdr"><span class="srv-cat-lbl">Expansión</span><div class="srv-cat-line"></div></div>
+      <div class="srv-grid srv-grid-2">
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+          <h4>Internacionalización</h4>
+          <p>Tu tienda lista para vender en varios países, idiomas y divisas sin fricción para el cliente.</p>
+        </div>
+
+        <div class="srv-card">
+          <div class="srv-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 7h3a5 5 0 010 10h-3m-6 0H6A5 5 0 016 7h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+          <h4>Integración con marketplaces</h4>
+          <p>Conecta tu Shopify con Amazon, eBay y otros canales de venta desde un único panel de control.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /srv-body -->
+
+  <div style="text-align:center;margin-top:40px" class="reveal">
+    <a href="#sec-contacto" class="btn-primary">
+      Hablar de mi proyecto
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ════════════ SOLUCIONES ════════════ -->
+<section id="sec-soluciones" class="page-section">
+  <div class="section-header reveal">
+    <h2>Sabemos cómo hacer que<br>tu web <span class="acc">venda más</span></h2>
+    <p>Llevamos 8 años arreglando exactamente estos problemas en ecommerce propio.</p>
+  </div>
+
+  <div class="sol-cards">
+
+    <!-- 1 Shopify personalizado -->
+    <div class="sol-card reveal">
+      <div class="sol-visual sv-shopify">
+        <div class="vis-browser" style="width:86%">
+          <div class="vis-browser-bar">
+            <div class="vis-dot" style="background:#ff5f57"></div>
+            <div class="vis-dot" style="background:#febc2e"></div>
+            <div class="vis-dot" style="background:#28c840"></div>
+            <div style="flex:1;height:9px;background:rgba(255,255,255,.06);border-radius:2px;margin-left:8px"></div>
+            <div style="font-size:6px;color:#96BF48;font-weight:700;margin-left:6px">SHOPIFY</div>
+          </div>
+          <div class="vis-browser-body" style="gap:4px">
+            <div style="height:28px;background:linear-gradient(135deg,rgba(0,194,110,.15),rgba(0,194,110,.04));border-radius:4px;display:flex;align-items:center;padding:0 7px;gap:6px">
+              <div style="width:16px;height:16px;background:rgba(0,194,110,.3);border-radius:3px"></div>
+              <div style="flex:1"><div class="vis-sk" style="width:50%;height:4px"></div></div>
+              <div style="font-size:6px;background:rgba(0,194,110,.7);color:#000;font-weight:700;padding:2px 5px;border-radius:2px">BUY</div>
+            </div>
+            <div style="display:flex;gap:3px">
+              <div style="width:38%;background:rgba(255,255,255,.04);border-radius:3px;height:26px"></div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:3px;padding:3px 0">
+                <div class="vis-sk" style="width:70%;height:3px"></div>
+                <div class="vis-sk hl" style="width:35%;height:3px"></div>
+                <div style="height:10px;background:rgba(0,194,110,.55);border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:5px;font-weight:700;color:#000">ADD TO CART</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sol-body">
+        <div class="sol-tag">01 — Shopify</div>
+        <h3>Tu tienda diseñada a medida, no una plantilla</h3>
+        <p>Cada elemento construido en Shopify para tu cliente ideal. Sin plantillas que también usa tu competencia.</p>
+      </div>
+    </div>
+
+    <!-- 2 CRO / A/B test -->
+    <div class="sol-card reveal reveal-d1">
+      <div class="sol-visual sv-ab">
+        <div class="sv2-ab">
+          <div class="sv2-box" style="border:1px solid rgba(255,80,80,.3)">
+            <div class="sv2-box-lbl" style="color:rgba(255,80,80,.75)">A</div>
+            <div class="sv2-box-btn" style="background:rgba(255,255,255,.09)"></div>
+            <div class="sv2-box-rate" style="color:rgba(255,80,80,.7)">2.1% CR</div>
+          </div>
+          <div class="sv2-vs">VS</div>
+          <div class="sv2-box" style="border:1px solid rgba(0,194,110,.4);background:rgba(0,194,110,.04)">
+            <div class="sv2-box-lbl" style="color:var(--green)">B ✓</div>
+            <div class="sv2-box-btn" style="background:rgba(0,194,110,.45)"></div>
+            <div class="sv2-box-rate" style="color:var(--green)">4.8% CR</div>
+          </div>
+        </div>
+      </div>
+      <div class="sol-body">
+        <div class="sol-tag">02 — CRO</div>
+        <h3>Decisiones basadas en datos, no en intuición</h3>
+        <p>A/B testing y analítica de comportamiento. Cada cambio tiene evidencia detrás.</p>
+      </div>
+    </div>
+
+    <!-- 3 Stack limpio sin apps -->
+    <div class="sol-card reveal reveal-d2">
+      <div class="sol-visual sv-apps">
+        <div class="sv2-stack">
+          <div class="sv2-app dead">📊</div>
+          <div class="sv2-app dead">💳</div>
+          <div class="sv2-app dead">🔔</div>
+          <div class="sv2-app" style="border-color:rgba(0,194,110,.35)">⚡</div>
+          <div class="sv2-app" style="border-color:rgba(0,194,110,.35)">🛒</div>
+          <div class="sv2-badge-g">+€220/mes</div>
+        </div>
+      </div>
+      <div class="sol-body">
+        <div class="sol-tag">03 — Optimización</div>
+        <h3>Stack limpio, sin apps que cobran y no aportan</h3>
+        <p>Auditamos y eliminamos lo que ralentiza tu tienda y drena tu margen cada mes.</p>
+      </div>
+    </div>
+
+    <!-- 4 ROAS / más conversiones -->
+    <div class="sol-card reveal">
+      <div class="sol-visual sv-roas">
+        <div class="sv-roas-dash">
+          <div class="sv-roas-hdr">
+            <span class="sv-roas-kpi">ROAS</span>
+            <div><span class="sv-roas-big" data-roas-target="4.2">1.8</span><span class="sv-roas-x">×</span></div>
+            <div class="sv-roas-tag">↑ 132%</div>
+          </div>
+          <div class="sv-roas-bars">
+            <div class="vis-bar" style="height:22%;background:rgba(255,80,80,.55)"></div>
+            <div class="vis-bar" style="height:32%;background:rgba(255,80,80,.45)"></div>
+            <div class="vis-bar" style="height:46%;background:rgba(255,160,0,.55)"></div>
+            <div class="vis-bar" style="height:62%;background:rgba(255,160,0,.5)"></div>
+            <div class="vis-bar on" style="height:78%"></div>
+            <div class="vis-bar on" style="height:96%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sol-body">
+        <div class="sol-tag">04 — Performance</div>
+        <h3>Más ventas con el mismo presupuesto de ads</h3>
+        <p>Optimizamos el funnel para que el tráfico que ya pagas convierta más. ROAS arriba sin subir inversión.</p>
+      </div>
+    </div>
+
+    <!-- 5 Márgenes -->
+    <div class="sol-card reveal reveal-d1">
+      <div class="sol-visual sv-margins">
+        <div style="display:flex;gap:14px;align-items:flex-end;padding:8px 16px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="font-size:7px;color:var(--gray);margin-bottom:3px">Sin estrategia</div>
+            <div class="sv-mbar" style="width:30px;border-radius:3px 3px 0 0;height:42px;background:rgba(255,80,80,.35)"></div>
+            <div class="sv-mbar" style="width:30px;border-radius:0 0 3px 3px;height:18px;background:rgba(255,255,255,.08)"></div>
+            <div class="sv-mlbl" style="font-size:7px;color:rgba(255,80,80,.75);font-weight:700;margin-top:3px">18% ↓</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="font-size:7px;color:var(--green);margin-bottom:3px">Con Oryx</div>
+            <div class="sv-mbar" style="width:30px;border-radius:3px 3px 0 0;height:20px;background:rgba(0,194,110,.18)"></div>
+            <div class="sv-mbar" style="width:30px;border-radius:0 0 3px 3px;height:40px;background:rgba(0,194,110,.55)"></div>
+            <div class="sv-mlbl" style="font-size:7px;color:var(--green);font-weight:700;margin-top:3px">34% ↑</div>
+          </div>
+        </div>
+      </div>
+      <div class="sol-body">
+        <div class="sol-tag">05 — Márgenes</div>
+        <h3>Estrategia de precios que sube tu margen</h3>
+        <p>Upsells, bundles y pricing con criterio. Cada pedido deja más dinero sin sacrificar conversión.</p>
+      </div>
+    </div>
+
+    <!-- 6 Ticket medio / cross-sell -->
+    <div class="sol-card reveal reveal-d2">
+      <div class="sol-visual sv-cart">
+        <div class="sv2-cart">
+          <div class="sv2-cart-hdr">Carrito</div>
+          <div class="sv2-row">
+            <div style="display:flex;align-items:center;gap:5px"><div class="sv2-thumb"></div><span>Producto principal</span></div>
+            <span style="font-weight:600">€89</span>
+          </div>
+          <div class="sv2-upsell">
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:14px;height:14px;background:rgba(0,194,110,.25);border-radius:2px;flex-shrink:0"></div>
+              <span style="color:var(--green)">⚡ Te puede interesar</span>
+            </div>
+            <span style="font-weight:700;color:var(--green)">+€32</span>
+          </div>
+          <div class="sv2-total">Total: €<span data-cart-total="121">89</span> 🛒</div>
+        </div>
+      </div>
+      <div class="sol-body">
+        <div class="sol-tag">06 — Ticket medio</div>
+        <h3>Cross-sells que hacen que cada cliente gaste más</h3>
+        <p>Recomendaciones estratégicas que invitan a añadir más al carrito de forma natural.</p>
+      </div>
+    </div>
+
+    <!-- 7 Velocidad -->
+    <div class="sol-card reveal">
+      <div class="sol-visual sv-speed">
+        <div class="sv2-gauge-wrap">
+          <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:4px">
+            <div style="text-align:center">
+              <div style="font-size:7px;color:var(--gray);margin-bottom:4px">Antes</div>
+              <div style="width:48px;height:24px;border:2px solid rgba(255,80,80,.5);border-bottom:none;border-radius:24px 24px 0 0;position:relative;overflow:hidden">
+                <div class="sv2-needle-b" style="position:absolute;bottom:0;left:calc(50% - 1px);width:2px;height:20px;background:rgba(255,80,80,.75);transform-origin:bottom center;transform:rotate(-35deg);border-radius:2px"></div>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:7px;color:var(--green);margin-bottom:4px">Con Oryx</div>
+              <div class="sv2-gauge"><div class="sv2-needle"></div></div>
+            </div>
+          </div>
+          <div class="sv2-gauge-lbl"><span data-speed-score="96">0</span> · Core Web Vitals ✓</div>
+        </div>
+      </div>
+      <div class="sol-body">
+        <div class="sol-tag">07 — Velocidad</div>
+        <h3>Tienda rápida que no pierde tráfico de pago</h3>
+        <p>Shopify nativo optimizado, Core Web Vitals en verde. El tráfico que pagaste no rebota por lentitud.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:36px" class="reveal">
+    <a href="#sec-contacto" class="btn-primary">
+      Quiero obtener estos resultados
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ════════════ METODOLOGÍA ════════════ -->
+<section id="sec-metodologia" class="page-section">
+  <div class="meto-wrap">
+
+    <!-- ── Left: title + tabs ── -->
+    <div class="meto-left reveal">
+      <p class="section-tag">Proceso</p>
+      <h2 style="margin-bottom:0">Nuestra<br><span class="acc">metodología</span></h2>
+      <p class="meto-intro">Así es cómo trabajamos para enfocarnos en brindarte el mejor servicio con los mejores resultados.</p>
+
+      <div class="meto-tabs" role="tablist">
+
+        <!-- Tab 1 -->
+        <button class="meto-tab active" data-meto="0" role="tab" aria-selected="true">
+          <span class="meto-tab-ico">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </span>
+          <span class="meto-tab-body">
+            <span class="meto-tab-lbl">Proceso de onboarding</span>
+            <span class="meto-tab-wk">Semana 1–2</span>
+          </span>
+        </button>
+
+        <!-- Tab 2 -->
+        <button class="meto-tab" data-meto="1" role="tab" aria-selected="false">
+          <span class="meto-tab-ico">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </span>
+          <span class="meto-tab-body">
+            <span class="meto-tab-lbl">Auditoría CRO</span>
+            <span class="meto-tab-wk">Semana 2–3</span>
+          </span>
+        </button>
+
+        <!-- Tab 3 -->
+        <button class="meto-tab" data-meto="2" role="tab" aria-selected="false">
+          <span class="meto-tab-ico">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </span>
+          <span class="meto-tab-body">
+            <span class="meto-tab-lbl">Proceso de diseño</span>
+            <span class="meto-tab-wk">Semana 3–5</span>
+          </span>
+        </button>
+
+        <!-- Tab 4 -->
+        <button class="meto-tab" data-meto="3" role="tab" aria-selected="false">
+          <span class="meto-tab-ico">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </span>
+          <span class="meto-tab-body">
+            <span class="meto-tab-lbl">Proceso de desarrollo</span>
+            <span class="meto-tab-wk">Semana 5–8</span>
+          </span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ── Right: content panels ── -->
+    <div class="meto-right reveal reveal-d1">
+
+      <!-- Panel 0 — Onboarding -->
+      <div class="meto-panel active" data-mpanel="0">
+        <div class="meto-pcard">
+          <div class="meto-pvis">
+            <div class="mp-ob">
+              <div class="mp-ob-list">
+                <div class="mp-ob-row"><div class="mp-ob-chk">✓</div>Análisis de competencia</div>
+                <div class="mp-ob-row"><div class="mp-ob-chk">✓</div>Perfil de cliente ideal</div>
+                <div class="mp-ob-row"><div class="mp-ob-chk">✓</div>Propuesta de valor única</div>
+                <div class="mp-ob-row"><div class="mp-ob-chk">✓</div>Cuellos de botella CRO</div>
+              </div>
+              <div class="mp-ob-badge">7 oportunidades detectadas →</div>
+            </div>
+          </div>
+          <div class="meto-pbody">
+            <p class="meto-ptag">Semana 1–2</p>
+            <h3>Proceso de Onboarding</h3>
+            <p>Analizamos tu competencia, tu cliente ideal y tu propuesta de valor. Identificamos los cuellos de botella de conversión antes de tocar una sola línea de código.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 1 — Auditoría CRO -->
+      <div class="meto-panel" data-mpanel="1">
+        <div class="meto-pcard">
+          <div class="meto-pvis">
+            <div class="mp-cro">
+              <div class="mp-cro-stage"><span class="mp-cro-lbl">Visitas</span><div class="mp-cro-bar" style="width:100%"></div><span class="mp-cro-num">10.000</span></div>
+              <div class="mp-cro-stage"><span class="mp-cro-lbl">Producto</span><div class="mp-cro-bar" style="width:72%"></div><span class="mp-cro-num">7.200</span></div>
+              <div class="mp-cro-stage"><span class="mp-cro-lbl">Carrito</span><div class="mp-cro-bar" style="width:38%"></div><span class="mp-cro-num">3.800</span></div>
+              <div class="mp-cro-stage bad"><span class="mp-cro-lbl">Pago</span><div class="mp-cro-bar" style="width:7%"></div><span class="mp-cro-num">700</span></div>
+              <div class="mp-cro-fix">↑ Aquí ganamos las ventas perdidas</div>
+            </div>
+          </div>
+          <div class="meto-pbody">
+            <p class="meto-ptag">Semana 2–3</p>
+            <h3>Auditoría CRO</h3>
+            <p>Diseñamos el customer journey optimizado. Definimos upsells, bundles y puntos de conversión para que cada visita valga más sin aumentar el presupuesto de ads.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2 — Diseño -->
+      <div class="meto-panel" data-mpanel="2">
+        <div class="meto-pcard">
+          <div class="meto-pvis">
+            <div class="mp-dis">
+              <div class="mp-dis-before">
+                <div class="mp-dis-lbl">Antes</div>
+                <div class="mp-dis-sk" style="width:90%"></div>
+                <div class="mp-dis-sk" style="width:60%"></div>
+                <div class="mp-dis-sk" style="width:75%"></div>
+                <div class="mp-dis-sk" style="width:50%"></div>
+                <div class="mp-dis-btn"></div>
+              </div>
+              <div class="mp-dis-arrow">→</div>
+              <div class="mp-dis-after">
+                <div class="mp-dis-lbl">Con Oryx</div>
+                <div class="mp-dis-sk" style="width:85%;background:rgba(0,194,110,.18)"></div>
+                <div class="mp-dis-sk" style="width:55%;background:rgba(0,194,110,.12)"></div>
+                <div class="mp-dis-sk" style="width:70%;background:rgba(0,194,110,.12)"></div>
+                <div class="mp-dis-sk" style="width:40%;background:rgba(0,194,110,.12)"></div>
+                <div class="mp-dis-btn"></div>
+              </div>
+            </div>
+          </div>
+          <div class="meto-pbody">
+            <p class="meto-ptag">Semana 3–5</p>
+            <h3>Proceso de Diseño</h3>
+            <p>Creamos un diseño que guíe hacia la compra. Cada elemento tiene un propósito de conversión: jerarquía visual, CTA estratégico y flujo sin fricciones.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3 — Desarrollo -->
+      <div class="meto-panel" data-mpanel="3">
+        <div class="meto-pcard">
+          <div class="meto-pvis">
+            <div class="mp-dev">
+              <div class="mp-cwv-row">
+                <div class="mp-cwv"><div class="mp-cwv-metric">LCP</div><div class="mp-cwv-val">1.2s</div></div>
+                <div class="mp-cwv"><div class="mp-cwv-metric">CLS</div><div class="mp-cwv-val">0.01</div></div>
+                <div class="mp-cwv"><div class="mp-cwv-metric">FID</div><div class="mp-cwv-val">12ms</div></div>
+              </div>
+              <div class="mp-dev-deploy">
+                <div class="mp-dev-dot"></div>
+                <span>Desplegado en Shopify · PageSpeed</span>
+                <span class="mp-dev-ps" style="color:var(--green);margin-left:2px">96</span>
+              </div>
+            </div>
+          </div>
+          <div class="meto-pbody">
+            <p class="meto-ptag">Semana 5–8</p>
+            <h3>Proceso de Desarrollo</h3>
+            <p>Implementamos y lanzamos la nueva versión de tu tienda. Pruebas A/B, optimización de rendimiento y Core Web Vitals en verde antes de cada entrega.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /meto-right -->
+  </div><!-- /meto-wrap -->
+</section>
+
+<!-- ════════════ CALCULADORA ════════════ -->
+<section id="sec-calculadora" class="page-section">
+  <div class="section-header reveal">
+    <h2>Calcula cuánto dejas<br>de ganar <span class="acc">cada mes</span></h2>
+    <p>Pequeñas mejoras en métricas clave transforman radicalmente tu cuenta de resultados sin aumentar inversión publicitaria.</p>
+  </div>
+
+  <div class="calc-wrap reveal">
+    <div class="calc-inner">
+
+      <!-- IZQUIERDA: sliders -->
+      <div class="calc-left">
+        <div class="calc-sliders">
+          <div>
+            <div class="calc-row-hdr">
+              <div class="calc-row-lbl">
+                <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                Sesiones / Mes
+              </div>
+              <div class="calc-row-val" id="val-sessions">50.000</div>
+            </div>
+            <input type="range" class="calc-slider" id="sl-sessions" min="1000" max="200000" step="1000" value="50000">
+          </div>
+          <div>
+            <div class="calc-row-hdr">
+              <div class="calc-row-lbl">
+                <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+                Pedidos / Mes
+              </div>
+              <div class="calc-row-val" id="val-orders">750</div>
+            </div>
+            <input type="range" class="calc-slider" id="sl-orders" min="10" max="5000" step="10" value="750">
+          </div>
+          <div>
+            <div class="calc-row-hdr">
+              <div class="calc-row-lbl">
+                <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+                Tasa de Conversión
+              </div>
+              <div class="calc-row-val" id="val-cr">1.50%</div>
+            </div>
+            <input type="range" class="calc-slider" id="sl-cr" min="0.1" max="8" step="0.1" value="1.5">
+          </div>
+          <div>
+            <div class="calc-row-hdr">
+              <div class="calc-row-lbl">
+                <div class="ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+                Ticket Medio
+              </div>
+              <div class="calc-row-val" id="val-aov">€85</div>
+            </div>
+            <input type="range" class="calc-slider" id="sl-aov" min="10" max="1000" step="5" value="85">
+          </div>
+        </div>
+      </div>
+
+      <!-- DERECHA: resultados -->
+      <div class="calc-right">
+        <div class="calc-result">
+          <div class="calc-result-label">Facturación mensual actual</div>
+          <div class="calc-revenue" id="calc-revenue">63.750€</div>
+          <div class="calc-result-desc">Un pequeño cambio de 0,5% en la tasa de conversión puede aumentar tus beneficios en <strong id="calc-uplift" style="color:var(--green)">+€5.313</strong></div>
+        </div>
+        <div class="calc-score">
+          <div>
+            <div class="calc-score-tag">Puntuación CRO</div>
+            <div class="calc-score-lbl" id="calc-score-label">Estás perdiendo dinero</div>
+          </div>
+          <div class="calc-score-num" id="calc-score-num">128</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="text-align:center" class="reveal">
+    <a href="#sec-contacto" class="btn-primary">
+      Quiero mejorar mi tasa de conversión
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ════════════ FAQ ════════════ -->
+<section id="sec-faqs" class="page-section">
+  <div class="section-header reveal">
+    <h2>Preguntas <span class="acc">frecuentes</span></h2>
+  </div>
+  <div class="faq-card reveal">
+    <div class="faq-messages" id="faq-messages"></div>
+  </div>
+  <div style="text-align:center;margin-top:28px" class="reveal">
+    <a href="#sec-contacto" class="btn-primary">
+      Trabajemos juntos
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ════════════ CONTACTO ════════════ -->
+<section id="sec-contacto" class="page-section">
+  <div class="cta-sec-hdr reveal">
+    <span class="section-tag">Contacto</span>
+    <h2>Hablemos de<br>tu <span class="acc">tienda</span></h2>
+    <p>Sin compromiso, sin pitch. Cuéntanos qué necesitas y te respondemos antes de 24h.</p>
+  </div>
+
+  <div class="cta-form-card reveal">
+    <form class="c-form" id="contact-form" novalidate>
+
+      <div class="f-group">
+        <label data-i18n="fNameLabel">Nombre y Apellidos</label>
+        <input type="text" name="name" placeholder="Andres García" data-i18n-ph="fNamePh" required>
+      </div>
+
+      <div class="f-group">
+        <label data-i18n="fEmailLabel">Correo electrónico</label>
+        <input type="email" name="email" placeholder="tu@tienda.com" data-i18n-ph="fEmailPh" required>
+      </div>
+
+      <div class="f-group">
+        <label data-i18n="fPhoneLabel">Número de teléfono</label>
+        <div class="f-phone-row">
+          <div class="f-phone-prefix">🇪🇸 +34</div>
+          <input type="tel" name="phone" placeholder="600 000 000" data-i18n-ph="fPhonePh" required>
+        </div>
+      </div>
+
+      <div class="f-group">
+        <label data-i18n="fStoreLabel">Link de tu Tienda Online</label>
+        <input type="url" name="store" placeholder="https://tutienda.com" data-i18n-ph="fStorePh" required>
+      </div>
+
+      <div class="f-group">
+        <label data-i18n="fRevenueLabel">Facturación mensual</label>
+        <select name="revenue" required>
+          <option value="" disabled selected data-i18n-opt="optSelect">Seleccionar...</option>
+          <option value="lt5k" data-i18n-opt="revLt5k">Menos de 5.000€/mes</option>
+          <option value="5-15k" data-i18n-opt="rev5to15k">5.000€ – 15.000€/mes</option>
+          <option value="15-50k" data-i18n-opt="rev15to50k">15.000€ – 50.000€/mes</option>
+          <option value="50-150k" data-i18n-opt="rev50to150k">50.000€ – 150.000€/mes</option>
+          <option value="150k+" data-i18n-opt="rev150kPlus">Más de 150.000€/mes</option>
+        </select>
+      </div>
+
+      <div class="f-group">
+        <label data-i18n="fFounderLabel">¿Eres el fundador/a de la marca?</label>
+        <select name="founder" required>
+          <option value="" disabled selected data-i18n-opt="optSelect2">Seleccionar</option>
+          <option value="yes" data-i18n-opt="founderYes">Sí, soy el fundador/a</option>
+          <option value="mkt" data-i18n-opt="founderMkt">No, soy responsable de marketing/ecommerce</option>
+          <option value="dir" data-i18n-opt="founderDir">Soy parte del equipo de dirección</option>
+          <option value="other" data-i18n-opt="founderOther">Otro rol</option>
+        </select>
+      </div>
+
+      <div class="f-group">
+        <label data-i18n="fProblemsLabel">¿Qué problemas estás teniendo actualmente en tu tienda?</label>
+        <textarea name="problems" placeholder="Conversión baja, mucho tráfico pero pocas ventas, abandonos de carrito, ticket medio bajo..." data-i18n-ph="fProblemsPh" required></textarea>
+      </div>
+
+      <div class="f-group">
+        <label data-i18n="fInvestLabel">¿Invertirías +6.000€ para mejorar la conversión de tu tienda bajo contrato?</label>
+        <select name="investment" required>
+          <option value="" disabled selected data-i18n-opt="optSelect3">Seleccionar</option>
+          <option value="yes" data-i18n-opt="investYes">Sí, si veo el ROI claro</option>
+          <option value="maybe" data-i18n-opt="investMaybe">Posiblemente, necesito más información</option>
+          <option value="no" data-i18n-opt="investNo">No tengo ese presupuesto ahora mismo</option>
+        </select>
+      </div>
+
+      <div class="f-btns">
+        <button type="submit" class="f-submit" id="f-submit">
+          <span data-i18n="fSubmitBtn">Enviar</span> &nbsp;→
+        </button>
+        <button type="button" class="f-submit-wa" id="f-submit-wa">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span data-i18n="fWaBtn">Envíanos un WhatsApp</span>
+        </button>
+      </div>
+
+      <p class="f-note" data-i18n="fNote">*Los botones se desbloquean cuando rellenas todos los campos</p>
+
+    </form>
+
+    <div class="f-proof">
+      <div class="f-avatars">
+        <div class="f-av" style="background:#6366f1">JL</div>
+        <div class="f-av" style="background:#f59e0b">MR</div>
+        <div class="f-av" style="background:#ef4444">AC</div>
+        <div class="f-av" style="background:#10b981">SR</div>
+      </div>
+      <div class="f-proof-copy">
+        <strong>5.0 ★</strong> <span data-i18n="fProofCopy">Con la confianza de las mejores marcas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-success" id="f-success">
+    <div class="f-success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h3 data-i18n="fSuccessTitle">Mensaje recibido</h3>
+    <p data-i18n="fSuccessDesc">Te respondemos en menos de 24h. Revisa tu bandeja de entrada.</p>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer id="sec-footer">
+  <div class="foot-brand">
+    <img src="assets/oryx-horizontal.png" alt="Oryx Commerce" style="height:36px;width:auto;mix-blend-mode:screen;display:block">
+  </div>
+  <p class="foot-tagline">Built on experience. Sharpened by AI.</p>
+  <div class="foot-links">
+    <a href="#sec-servicios" data-i18n="navServicios">Servicios</a>
+    <a href="#sec-soluciones" data-i18n="navSoluciones">Soluciones</a>
+    <a href="#sec-calculadora" data-i18n="navCalc">Calculadora</a>
+    <a href="#sec-faqs" data-i18n="navFaqs">FAQ</a>
+    <a href="#sec-contacto" data-i18n="navContacto">Contacto</a>
+  </div>
+  <p class="foot-copy">© 2026 <span class="fg">Oryx Commerce</span>. <span data-i18n="footRights">Todos los derechos reservados.</span></p>
+</footer>
+
+<!-- ════════════ BOTTOM NAV ════════════ -->
+<nav id="bottom-nav">
+  <a href="#sec-inicio" class="nav-tab active" data-section="sec-inicio">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    <span data-i18n="navInicio">Inicio</span>
+  </a>
+  <a href="#sec-servicios" class="nav-tab" data-section="sec-servicios">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+    </svg>
+    <span data-i18n="navServicios">Servicios</span>
+  </a>
+  <a href="#sec-soluciones" class="nav-tab" data-section="sec-soluciones">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>
+    <span data-i18n="navSoluciones">Soluciones</span>
+  </a>
+  <a href="#sec-calculadora" class="nav-tab" data-section="sec-calculadora">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/>
+    </svg>
+    <span data-i18n="navCalc">Calculadora</span>
+  </a>
+  <a href="#sec-faqs" class="nav-tab" data-section="sec-faqs">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+    <span data-i18n="navFaqs">FAQ's</span>
+  </a>
+  <a href="#sec-contacto" class="nav-cta-btn">
+    <span class="nav-cta-lg" data-i18n="navCta">Trabajemos juntos</span>
+    <span class="nav-cta-sm" data-i18n="navCtaSm">Contacto</span>
+  </a>
+</nav>
+
+<!-- ════════════ LANGUAGE SWITCHER ════════════ -->
+<div id="lang-sw" role="toolbar" aria-label="Language">
+  <span style="font-size:13px;margin-right:2px">🌐</span>
+  <button class="lang-btn active" data-lang="es">ES</button>
+  <button class="lang-btn" data-lang="en">EN</button>
+  <button class="lang-btn" data-lang="fr">FR</button>
+  <button class="lang-btn" data-lang="pt">PT</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+/* ── PARTICLE NETWORK ────────────────────────────────── */
+(function(){
+  const canvas = document.getElementById('particles-canvas');
+  const ctx    = canvas.getContext('2d');
+
+  const CONFIG = {
+    count:      52,
+    maxDist:    120,
+    maxDistSq:  14400,
+    speed:      0.35,
+    dotRadius:  1.5,
+    lineWidth:  0.6,
+    color:      '0,194,110',
+    mouseRadius:140,
+    mouseRadSq: 19600,
+  };
+
+  let W, H, particles = [], mouse = {x:-9999, y:-9999};
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function rand(min,max){ return Math.random()*(max-min)+min; }
+
+  function Particle(){
+    this.x  = rand(0,W);
+    this.y  = rand(0,H);
+    this.vx = rand(-CONFIG.speed, CONFIG.speed);
+    this.vy = rand(-CONFIG.speed, CONFIG.speed);
+    this.r  = rand(.6, CONFIG.dotRadius);
+    this.opacity = rand(.25,.7);
+    this.pulse  = rand(0, Math.PI*2);
+  }
+
+  function init(){
+    particles = [];
+    for(let i=0;i<CONFIG.count;i++) particles.push(new Particle());
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    for(let i=0;i<particles.length;i++){
+      const a = particles[i];
+
+      /* move */
+      a.x += a.vx;
+      a.y += a.vy;
+      a.pulse += .012;
+
+      /* wrap edges */
+      if(a.x<-20) a.x=W+20;
+      if(a.x>W+20) a.x=-20;
+      if(a.y<-20) a.y=H+20;
+      if(a.y>H+20) a.y=-20;
+
+      /* mouse repel — squared distance, no sqrt unless needed */
+      const dx = a.x - mouse.x;
+      const dy = a.y - mouse.y;
+      const dmSq = dx*dx+dy*dy;
+      if(dmSq < CONFIG.mouseRadSq){
+        const dm = Math.sqrt(dmSq);
+        const force = (CONFIG.mouseRadius - dm) / CONFIG.mouseRadius * .015;
+        a.vx += dx/dm * force;
+        a.vy += dy/dm * force;
+        const spdSq = a.vx*a.vx+a.vy*a.vy;
+        const maxSpd = CONFIG.speed*3;
+        if(spdSq > maxSpd*maxSpd){ a.vx *= .95; a.vy *= .95; }
+      }
+
+      /* draw dot */
+      const pulse = .5 + .5*Math.sin(a.pulse);
+      const alpha = a.opacity * (.7 + .3*pulse);
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, a.r*(1+.3*pulse), 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${CONFIG.color},${alpha})`;
+      ctx.fill();
+
+      /* draw lines — use squared dist to skip sqrt on most pairs */
+      for(let j=i+1;j<particles.length;j++){
+        const b  = particles[j];
+        const ex = a.x-b.x, ey = a.y-b.y;
+        const distSq = ex*ex+ey*ey;
+        if(distSq < CONFIG.maxDistSq){
+          const lineAlpha = (1 - Math.sqrt(distSq)/CONFIG.maxDist) * .25;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.strokeStyle = `rgba(${CONFIG.color},${lineAlpha})`;
+          ctx.lineWidth   = CONFIG.lineWidth;
+          ctx.stroke();
+        }
+      }
+    }
+
+    if(!document.hidden) requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', ()=>{ resize(); init(); });
+  window.addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
+  window.addEventListener('touchmove', e=>{
+    mouse.x=e.touches[0].clientX; mouse.y=e.touches[0].clientY;
+  },{passive:true});
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) draw(); });
+
+  resize();
+  init();
+  draw();
+})();
+</script>
+<script>
+(function(){
+
+/* ── Preloader entrance ─────────────────── */
+(function(){
+  const img = document.getElementById('pre-logo-img');
+  const glow = document.getElementById('pre-glow');
+  if(!img) return;
+  gsap.set(img,{clipPath:'inset(0 2% 100% 2%)',scale:.88,opacity:1});
+  const ptl = gsap.timeline({delay:.15});
+  ptl.to(img,{
+    clipPath:'inset(0 0% 0% 0%)',scale:1,
+    duration:1.15,ease:'power3.inOut'
+  })
+  .to(glow,{opacity:1,scale:1.15,duration:.35,ease:'power2.out'},'-=.05')
+  .to(glow,{opacity:.28,scale:1,duration:.9,ease:'sine.inOut'});
+})();
+
+/* ── Preloader exit ─────────────────────── */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    gsap.to('#preloader',{
+      opacity:0,scale:1.04,duration:.6,ease:'power2.inOut',
+      onComplete:()=>{
+        document.getElementById('preloader').style.display='none';
+        heroIn();
+      }
+    });
+  },1900);
+});
+
+/* ── Hero entrance ───────────────────────── */
+function heroIn(){
+  const tl = gsap.timeline();
+
+  /* Initial states */
+  gsap.set('#hero-brand',{opacity:0,y:-16});
+
+  /* Decorative isotipo: scale + fade + float */
+  gsap.set('.hero-iso-bg',{yPercent:-50,y:0,scale:1.06});
+  gsap.to('.hero-iso-bg',{
+    opacity:.22,y:-10,scale:1,duration:2.2,ease:'power2.out',delay:.4
+  });
+  /* glow handled by CSS @keyframes iso-glow */
+  /* Continuous float */
+  gsap.to('.hero-iso-bg',{
+    y:'-=16',duration:5.5,ease:'sine.inOut',
+    repeat:-1,yoyo:true,delay:2.8
+  });
+
+  /* Content sequence */
+  tl.to('#hero-brand',{opacity:1,y:0,duration:.8,ease:'power3.out'})
+    .to('.word-inner',{y:0,rotateX:0,duration:.88,stagger:.065,ease:'power4.out'},'-=.35')
+    .to('#hero-p',{opacity:1,duration:.6,ease:'power2.out'},'-=.4')
+    .to('#hero-btns',{opacity:1,duration:.55,ease:'power2.out'},'-=.35')
+    .to('.h-stat',{opacity:1,y:0,duration:.5,stagger:.09,ease:'power3.out'},'-=.2');
+
+  /* Green accent lines on stats */
+  setTimeout(()=>{
+    document.querySelectorAll('.h-stat').forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('lit'), i*90+200);
+    });
+  },1400);
+
+  /* Counters synced with stats */
+  document.querySelectorAll('.counter').forEach(el=>{
+    const target = parseInt(el.dataset.to);
+    gsap.to({n:0},{
+      n:target,duration:2,delay:1.5,ease:'power2.out',
+      onUpdate:function(){ el.textContent = Math.round(this.targets()[0].n); }
+    });
+  });
+}
+
+/* ── Scroll reveal ──────────────────────── */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* ── Active nav tab on scroll ───────────── */
+const sections = ['sec-inicio','sec-servicios','sec-soluciones','sec-calculadora','sec-faqs','sec-contacto'];
+const navTabs  = document.querySelectorAll('.nav-tab[data-section]');
+
+const sectionObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      navTabs.forEach(t=>{
+        t.classList.toggle('active', t.dataset.section === id);
+      });
+    }
+  });
+},{rootMargin:'-40% 0px -55% 0px'});
+
+sections.forEach(id=>{
+  const el = document.getElementById(id);
+  if(el) sectionObserver.observe(el);
+});
+
+/* ── Sol visual animations — GSAP looping timelines ── */
+(function(){
+  const RD=1.2, E='power3.out';
+
+  function makeTl(vis){
+    const $=s=>vis.querySelector(s), $$=s=>[...vis.querySelectorAll(s)];
+
+    /* 1 — Shopify browser */
+    if(vis.classList.contains('sv-shopify')){
+      const br=$('.vis-browser'); if(!br) return null;
+      const items=$$('.vis-browser-body > *');
+      const tl=gsap.timeline({repeat:-1,repeatDelay:RD,paused:true});
+      tl.fromTo(br,{opacity:0,y:-12},{opacity:1,y:0,duration:.55,ease:E})
+        .fromTo(items,{opacity:0,y:6},{opacity:1,y:0,stagger:.18,duration:.35,ease:E},.3)
+        .to({},{duration:2.5})
+        .to([br,...items],{opacity:0,duration:.4,ease:'power2.in'});
+      return tl;
+    }
+
+    /* 2 — A/B test */
+    if(vis.classList.contains('sv-ab')){
+      const boxes=$$('.sv2-box'),btns=$$('.sv2-box-btn'),rates=$$('.sv2-box-rate');
+      const tl=gsap.timeline({repeat:-1,repeatDelay:RD,paused:true});
+      tl.fromTo(boxes,{opacity:0,y:8},{opacity:1,y:0,stagger:.15,duration:.4,ease:E})
+        .fromTo(btns,{scaleY:0,transformOrigin:'bottom center'},{scaleY:1,transformOrigin:'bottom center',stagger:.2,duration:.45,ease:'power2.out'},.3)
+        .fromTo(rates,{opacity:0},{opacity:1,stagger:.15,duration:.3,ease:E},.85)
+        .to({},{duration:2})
+        .to([...boxes,...btns,...rates],{opacity:0,duration:.35,ease:'power2.in'})
+        .set(btns,{scaleY:0,transformOrigin:'bottom center'});
+      return tl;
+    }
+
+    /* 3 — Apps */
+    if(vis.classList.contains('sv-apps')){
+      const apps=$$('.sv2-app'),dead=$$('.sv2-app.dead'),badge=$('.sv2-badge-g');
+      const tl=gsap.timeline({repeat:-1,repeatDelay:RD,paused:true});
+      tl.fromTo(apps,{opacity:0,scale:.6},{opacity:1,scale:1,stagger:.1,duration:.4,ease:'back.out(1.4)'})
+        .to(dead,{opacity:.22,duration:.4,stagger:.08},.65)
+        .fromTo(badge,{opacity:0,y:6},{opacity:1,y:0,duration:.35,ease:E},1.1)
+        .to({},{duration:2})
+        .to([...apps,badge],{opacity:0,duration:.35,ease:'power2.in'});
+      return tl;
+    }
+
+    /* 4 — ROAS dashboard (bars + counter) */
+    if(vis.classList.contains('sv-roas')){
+      const bars=$$('.vis-bar'),rNum=$('[data-roas-target]'),tag=$('.sv-roas-tag');
+      const rTarget=parseFloat(rNum?.dataset.roasTarget||'4.2'),rCtr={n:1.8};
+      const tl=gsap.timeline({repeat:-1,repeatDelay:RD,paused:true});
+      tl.to(bars,{scaleY:0,transformOrigin:'bottom center',stagger:{each:.07,from:'start'},duration:.3,ease:'power2.in'})
+        .to(bars,{scaleY:1,transformOrigin:'bottom center',stagger:{each:.1,from:'start'},duration:.45,ease:'power3.out'})
+        .to(rCtr,{n:rTarget,duration:1.1,ease:'power2.out',
+          onUpdate(){if(rNum) rNum.textContent=rCtr.n.toFixed(1);}
+        },.35)
+        .fromTo(tag,{opacity:0},{opacity:1,duration:.35,ease:E},.9)
+        .to({},{duration:1.8})
+        .to(tag,{opacity:0,duration:.25})
+        .add(()=>{rCtr.n=1.8; if(rNum) rNum.textContent='1.8';});
+      return tl;
+    }
+
+    /* 5 — Margins */
+    if(vis.classList.contains('sv-margins')){
+      const mb=$$('.sv-mbar'),ml=$$('.sv-mlbl');
+      const tl=gsap.timeline({repeat:-1,repeatDelay:RD,paused:true});
+      tl.fromTo(mb.slice(0,2),{scaleY:0,transformOrigin:'bottom center'},{scaleY:1,transformOrigin:'bottom center',stagger:.15,duration:.5,ease:'power3.out'})
+        .fromTo(mb.slice(2,4),{scaleY:0,transformOrigin:'bottom center'},{scaleY:1,transformOrigin:'bottom center',stagger:.15,duration:.5,ease:'power3.out'},.4)
+        .fromTo(ml,{opacity:0},{opacity:1,stagger:.15,duration:.3,ease:E},.9)
+        .to({},{duration:2})
+        .to([...mb,...ml],{opacity:0,duration:.35,ease:'power2.in'})
+        .set(mb,{scaleY:0,transformOrigin:'bottom center'});
+      return tl;
+    }
+
+    /* 6 — Cart */
+    if(vis.classList.contains('sv-cart')){
+      const cart=$('.sv2-cart'),row=$('.sv2-row'),upsell=$('.sv2-upsell'),
+            total=$('.sv2-total'),totalEl=$('[data-cart-total]');
+      const tgt=parseInt(totalEl?.dataset.cartTotal||'121'),ctr={n:89};
+      const tl=gsap.timeline({repeat:-1,repeatDelay:RD,paused:true});
+      tl.fromTo(cart,  {opacity:0,y:8}, {opacity:1,y:0,duration:.4,ease:E})
+        .fromTo(row,   {opacity:0,y:5}, {opacity:1,y:0,duration:.35,ease:E},.2)
+        .fromTo(upsell,{opacity:0,x:10},{opacity:1,x:0,duration:.4,ease:E},.5)
+        .fromTo(total, {opacity:0},     {opacity:1,duration:.3,ease:E},.65)
+        .to(ctr,{n:tgt,duration:.9,ease:'power2.out',
+          onUpdate(){if(totalEl) totalEl.textContent=Math.round(ctr.n);}
+        },.75)
+        .to({},{duration:1.8})
+        .to([cart,row,upsell,total].filter(Boolean),{opacity:0,duration:.35,ease:'power2.in'})
+        .add(()=>{ctr.n=89; if(totalEl) totalEl.textContent='89';});
+      return tl;
+    }
+
+    /* 7 — Speed */
+    if(vis.classList.contains('sv-speed')){
+      const nb=$('.sv2-needle-b'),ng=$('.sv2-needle'),
+            scoreEl=$('[data-speed-score]'),lbl=$('.sv2-gauge-lbl');
+      const tgt=parseInt(scoreEl?.dataset.speedScore||'96'),ctr={n:0};
+      if(ng) gsap.set(ng,{rotation:-80,transformOrigin:'bottom center'});
+      const tl=gsap.timeline({repeat:-1,repeatDelay:RD,paused:true});
+      if(nb) tl.fromTo(nb,{opacity:0},{opacity:1,duration:.4,ease:E},0);
+      if(ng) tl.to(ng,{opacity:1,rotation:28,transformOrigin:'bottom center',duration:1.4,ease:'power3.inOut'},.3);
+      if(scoreEl) tl.to(ctr,{n:tgt,duration:1.1,ease:'power2.out',
+        onUpdate(){scoreEl.textContent=Math.round(ctr.n);}
+      },.5);
+      if(lbl) tl.fromTo(lbl,{opacity:0,y:5},{opacity:1,y:0,duration:.35,ease:E},.9);
+      tl.to({},{duration:2})
+        .to([nb,ng,lbl].filter(Boolean),{opacity:0,duration:.4,ease:'power2.in'})
+        .set(ng||{},{rotation:-80,transformOrigin:'bottom center'})
+        .add(()=>{ctr.n=0; if(scoreEl) scoreEl.textContent='0';});
+      return tl;
+    }
+
+    return null;
+  }
+
+  const solMap=new Map();
+  document.querySelectorAll('.sol-visual').forEach(vis=>{
+    const tl=makeTl(vis); if(tl) solMap.set(vis,tl);
+  });
+
+  const solObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      const tl=solMap.get(e.target); if(!tl) return;
+      e.isIntersecting ? tl.restart() : tl.pause();
+    });
+  },{threshold:.35});
+
+  solMap.forEach((_,vis)=>solObs.observe(vis));
+})();
+
+/* ── Metodología tabs ──────────────────── */
+(function(){
+  const tabs   = document.querySelectorAll('.meto-tab');
+  const panels = document.querySelectorAll('.meto-panel');
+  if(!tabs.length) return;
+
+  function switchTab(idx){
+    tabs.forEach((t,i)=>{
+      t.classList.toggle('active', i===idx);
+      t.setAttribute('aria-selected', i===idx);
+    });
+    panels.forEach((p,i)=>{
+      if(i===idx){
+        p.classList.add('active');
+        gsap.fromTo(p,{opacity:0,y:10},{opacity:1,y:0,duration:.35,ease:'power2.out'});
+      } else {
+        p.classList.remove('active');
+      }
+    });
+  }
+
+  tabs.forEach((tab,i)=>{
+    tab.addEventListener('click',()=>switchTab(i));
+  });
+})();
+
+/* ── Smooth scroll for anchor links ────── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id = a.getAttribute('href');
+    if(id==='#') return;
+    const target = document.querySelector(id);
+    if(!target) return;
+    e.preventDefault();
+    const top = target.getBoundingClientRect().top + window.scrollY - 8;
+    window.scrollTo({top, behavior:'smooth'});
+  });
+});
+
+/* ── Calculator ─────────────────────────── */
+function numFmt(n){
+  return n.toLocaleString('es-ES');
+}
+function updateCalc(){
+  const sessions = +document.getElementById('sl-sessions').value;
+  const orders   = +document.getElementById('sl-orders').value;
+  const cr       = +document.getElementById('sl-cr').value;
+  const aov      = +document.getElementById('sl-aov').value;
+
+  document.getElementById('val-sessions').textContent = numFmt(sessions);
+  document.getElementById('val-orders').textContent   = numFmt(orders);
+  document.getElementById('val-cr').textContent       = cr.toFixed(2)+'%';
+  document.getElementById('val-aov').textContent      = '€'+aov;
+
+  const revenue = Math.round(orders * aov);
+  const uplift  = Math.round(sessions * 0.005 * aov);
+  const score   = Math.min(999, Math.round((cr / 3) * 100 + (aov / 500) * 200));
+
+  document.getElementById('calc-revenue').textContent = numFmt(revenue)+'€';
+  document.getElementById('calc-uplift').textContent  = '+€'+numFmt(uplift);
+
+  let label = 'Margen de mejora alto';
+  if(score < 80)       label = 'Estás perdiendo dinero';
+  else if(score < 150) label = 'Margen de mejora alto';
+  else if(score < 280) label = 'Buen desempeño';
+  else                  label = 'Ecommerce optimizado';
+
+  document.getElementById('calc-score-label').textContent = label;
+  document.getElementById('calc-score-num').textContent   = score;
+}
+['sl-sessions','sl-orders','sl-cr','sl-aov'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', updateCalc);
+});
+updateCalc();
+
+/* ── TRANSLATIONS ───────────────────────── */
+const TRANSLATIONS = {
+  es:{
+    hbSub:'Agencia de Gestión de Ecommerce',
+    navInicio:'Inicio', navServicios:'Servicios', navSoluciones:'Soluciones',
+    navCalc:'Calculadora', navFaqs:"FAQ's", navContacto:'Contacto',
+    navCta:'Trabajemos juntos', navCtaSm:'Contacto',
+    heroL1:'Hacemos que tu negocio',
+    heroL2:'venda más online, con la',
+    heroL3:'experiencia de quien',
+    heroL4:'ya lo ha hecho.',
+    heroP:'Desarrollamos tiendas Shopify que convierten, gestionamos ecommerce con criterio real y aplicamos IA para acelerar lo que antes tardaba semanas.',
+    heroCta:'Hablemos de tu proyecto', heroGhost:'Ver servicios',
+    stat1:'Años operando ecommerce propio', stat2:'Proyectos entregados',
+    stat3:'Continentes UK · USA · CH', stat4:'Clientes que repiten',
+    fNameLabel:'Nombre y Apellidos', fEmailLabel:'Correo electrónico',
+    fPhoneLabel:'Número de teléfono', fStoreLabel:'Link de tu Tienda Online',
+    fRevenueLabel:'Facturación mensual',
+    fFounderLabel:'¿Eres el fundador/a de la marca?',
+    fProblemsLabel:'¿Qué problemas estás teniendo actualmente en tu tienda?',
+    fInvestLabel:'¿Invertirías +6.000€ para mejorar la conversión de tu tienda bajo contrato?',
+    fNamePh:'Andres García', fEmailPh:'tu@tienda.com',
+    fPhonePh:'600 000 000', fStorePh:'https://tutienda.com',
+    fProblemsPh:'Conversión baja, mucho tráfico pero pocas ventas, abandonos de carrito, ticket medio bajo...',
+    optSelect:'Seleccionar...', optSelect2:'Seleccionar', optSelect3:'Seleccionar',
+    revLt5k:'Menos de 5.000€/mes', rev5to15k:'5.000€ – 15.000€/mes',
+    rev15to50k:'15.000€ – 50.000€/mes', rev50to150k:'50.000€ – 150.000€/mes',
+    rev150kPlus:'Más de 150.000€/mes',
+    founderYes:'Sí, soy el fundador/a',
+    founderMkt:'No, soy responsable de marketing/ecommerce',
+    founderDir:'Soy parte del equipo de dirección', founderOther:'Otro rol',
+    investYes:'Sí, si veo el ROI claro',
+    investMaybe:'Posiblemente, necesito más información',
+    investNo:'No tengo ese presupuesto ahora mismo',
+    fSubmitBtn:'Enviar', fSendingBtn:'Enviando...', fWaBtn:'Envíanos un WhatsApp',
+    fNote:'*Los botones se desbloquean cuando rellenas todos los campos',
+    fProofCopy:'Con la confianza de las mejores marcas',
+    fSuccessTitle:'Mensaje recibido',
+    fSuccessDesc:'Te respondemos en menos de 24h. Revisa tu bandeja de entrada.',
+    footRights:'Todos los derechos reservados.',
+    faqs:[
+      { q:'¿Solo realizáis Tiendas Online?',
+        a:'No. También desarrollamos webs corporativas, landing pages y aplicamos automatización IA a cualquier proceso de ecommerce. El Shopify es nuestra especialidad, pero no el único servicio.' },
+      { q:'¿Cuánto tardáis en diseñar y desarrollar la tienda?',
+        a:'El proceso completo de diagnóstico, estrategia, diseño y desarrollo lleva entre 6 y 8 semanas. Depende de la complejidad del proyecto y de lo ágil que sea el feedback del cliente.' },
+      { q:'¿Podéis gestionar mi tienda actual si ya la tengo en marcha?',
+        a:'Sí. Muchos de nuestros clientes nos contratan para optimizar, escalar o gestionar tiendas existentes, no solo para crear nuevas. Auditamos primero y proponemos un plan de acción concreto.' },
+      { q:'¿Qué incluye la gestión recurrente mensual?',
+        a:'CRO continuo, mantenimiento técnico, mejoras basadas en datos reales, análisis de comportamiento y optimización de conversión. Es un servicio de mejora continua, no mantenimiento pasivo.' },
+      { q:'¿Recibiré asesoramiento para mejorar mi estrategia?',
+        a:'Sí. No solo ejecutamos lo que nos pides — cuestionamos lo que no funciona y proponemos mejoras basadas en lo que hemos visto funcionar en ecommerce real durante 8 años.' },
+      { q:'¿Cuándo se efectúa el pago?',
+        a:'50% al inicio del proyecto y 50% en la entrega final. Para gestión mensual, factura el día 1 de cada mes. Sin pagos sorpresa ni letra pequeña.' },
+    ]
+  },
+  en:{
+    hbSub:'Ecommerce Management Agency',
+    navInicio:'Home', navServicios:'Services', navSoluciones:'Solutions',
+    navCalc:'Calculator', navFaqs:"FAQ's", navContacto:'Contact',
+    navCta:"Let's work together", navCtaSm:'Contact',
+    heroL1:'We make your business',
+    heroL2:'sell more online, with the',
+    heroL3:'experience of those who',
+    heroL4:'have already done it.',
+    heroP:'We build Shopify stores that convert, manage ecommerce with real expertise, and apply AI to accelerate what used to take weeks.',
+    heroCta:"Let's talk about your project", heroGhost:'View services',
+    stat1:'Years running own ecommerce', stat2:'Projects delivered',
+    stat3:'Continents UK · USA · CH', stat4:'Returning clients',
+    fNameLabel:'Full Name', fEmailLabel:'Email address',
+    fPhoneLabel:'Phone number', fStoreLabel:'Your Online Store URL',
+    fRevenueLabel:'Monthly revenue',
+    fFounderLabel:'Are you the founder of the brand?',
+    fProblemsLabel:'What problems are you currently facing in your store?',
+    fInvestLabel:'Would you invest +€6,000 to improve your store\'s conversion under contract?',
+    fNamePh:'John Smith', fEmailPh:'you@store.com',
+    fPhonePh:'600 000 000', fStorePh:'https://yourstore.com',
+    fProblemsPh:'Low conversion, high traffic but few sales, cart abandonment, low average order value...',
+    optSelect:'Select...', optSelect2:'Select', optSelect3:'Select',
+    revLt5k:'Less than €5,000/mo', rev5to15k:'€5,000 – €15,000/mo',
+    rev15to50k:'€15,000 – €50,000/mo', rev50to150k:'€50,000 – €150,000/mo',
+    rev150kPlus:'More than €150,000/mo',
+    founderYes:'Yes, I am the founder',
+    founderMkt:'No, I\'m the marketing/ecommerce manager',
+    founderDir:'I\'m part of the leadership team', founderOther:'Other role',
+    investYes:'Yes, if I see clear ROI',
+    investMaybe:'Possibly, I need more information',
+    investNo:'I don\'t have that budget right now',
+    fSubmitBtn:'Send', fSendingBtn:'Sending...', fWaBtn:'Send us a WhatsApp',
+    fNote:'*Buttons unlock when you fill in all fields',
+    fProofCopy:'Trusted by the best brands',
+    fSuccessTitle:'Message received',
+    fSuccessDesc:'We\'ll reply within 24h. Check your inbox.',
+    footRights:'All rights reserved.',
+    faqs:[
+      { q:'Do you only build Online Stores?',
+        a:'No. We also develop corporate websites, landing pages, and apply AI automation to any ecommerce process. Shopify is our specialty, but not our only service.' },
+      { q:'How long does it take to design and develop a store?',
+        a:'The full process of diagnosis, strategy, design, and development takes 6 to 8 weeks. It depends on project complexity and how quickly the client provides feedback.' },
+      { q:'Can you manage my existing store?',
+        a:'Yes. Many of our clients hire us to optimize, scale, or manage existing stores, not just build new ones. We audit first and propose a concrete action plan.' },
+      { q:'What does recurring monthly management include?',
+        a:'Continuous CRO, technical maintenance, improvements based on real data, behavior analysis and conversion optimization. It\'s a continuous improvement service, not passive maintenance.' },
+      { q:'Will I receive advice to improve my strategy?',
+        a:'Yes. We don\'t just execute what you ask — we challenge what isn\'t working and propose improvements based on what we\'ve seen work in real ecommerce over 8 years.' },
+      { q:'When is payment due?',
+        a:'50% at the start of the project and 50% upon final delivery. For monthly management, invoiced on the 1st of each month. No surprise payments, no fine print.' },
+    ]
+  },
+  fr:{
+    hbSub:'Agence de Gestion E-commerce',
+    navInicio:'Accueil', navServicios:'Services', navSoluciones:'Solutions',
+    navCalc:'Calculateur', navFaqs:"FAQ's", navContacto:'Contact',
+    navCta:'Travaillons ensemble', navCtaSm:'Contact',
+    heroL1:'Nous faisons croître votre',
+    heroL2:'business en ligne, avec l\'',
+    heroL3:'expérience de ceux qui',
+    heroL4:'l\'ont déjà fait.',
+    heroP:'Nous créons des boutiques Shopify qui convertissent, gérons l\'e-commerce avec expertise et appliquons l\'IA pour accélérer ce qui prenait des semaines.',
+    heroCta:'Parlons de votre projet', heroGhost:'Voir les services',
+    stat1:'Ans en e-commerce', stat2:'Projets livrés',
+    stat3:'Continents UK · USA · CH', stat4:'Clients fidèles',
+    fNameLabel:'Nom et Prénom', fEmailLabel:'Adresse e-mail',
+    fPhoneLabel:'Numéro de téléphone', fStoreLabel:'Lien de votre Boutique',
+    fRevenueLabel:'Chiffre d\'affaires mensuel',
+    fFounderLabel:'Êtes-vous le fondateur/trice de la marque?',
+    fProblemsLabel:'Quels problèmes rencontrez-vous actuellement?',
+    fInvestLabel:'Investiriez-vous +6.000€ pour améliorer votre taux de conversion?',
+    fNamePh:'Jean Dupont', fEmailPh:'vous@boutique.com',
+    fPhonePh:'06 00 00 00 00', fStorePh:'https://votreboutique.com',
+    fProblemsPh:'Faible conversion, beaucoup de trafic mais peu de ventes, abandons de panier...',
+    optSelect:'Sélectionner...', optSelect2:'Sélectionner', optSelect3:'Sélectionner',
+    revLt5k:'Moins de 5.000€/mois', rev5to15k:'5.000€ – 15.000€/mois',
+    rev15to50k:'15.000€ – 50.000€/mois', rev50to150k:'50.000€ – 150.000€/mois',
+    rev150kPlus:'Plus de 150.000€/mois',
+    founderYes:'Oui, je suis le fondateur/trice',
+    founderMkt:'Non, je suis responsable marketing/e-commerce',
+    founderDir:'Je fais partie de l\'équipe dirigeante', founderOther:'Autre rôle',
+    investYes:'Oui, si je vois le ROI clairement',
+    investMaybe:'Peut-être, j\'ai besoin de plus d\'informations',
+    investNo:'Je n\'ai pas ce budget pour l\'instant',
+    fSubmitBtn:'Envoyer', fSendingBtn:'Envoi...', fWaBtn:'Envoyez-nous un WhatsApp',
+    fNote:'*Les boutons se débloquent quand vous remplissez tous les champs',
+    fProofCopy:'La confiance des meilleures marques',
+    fSuccessTitle:'Message reçu',
+    fSuccessDesc:'Nous vous répondons dans les 24h. Vérifiez votre boîte mail.',
+    footRights:'Tous droits réservés.',
+    faqs:[
+      { q:'Faites-vous uniquement des boutiques en ligne?',
+        a:'Non. Nous développons aussi des sites corporatifs, des landing pages et appliquons l\'automatisation IA à tout processus e-commerce. Shopify est notre spécialité, mais pas notre seul service.' },
+      { q:'Combien de temps faut-il pour développer une boutique?',
+        a:'Selon la portée, une boutique Shopify complète est généralement prête en 3 à 6 semaines. Les projets plus importants peuvent prendre plus de temps, toujours avec un planning clair.' },
+      { q:'Pouvez-vous gérer ma boutique existante?',
+        a:'Oui. Beaucoup de nos clients nous engagent pour optimiser, scaler ou gérer des boutiques existantes. Nous auditons d\'abord et proposons un plan d\'action concret.' },
+      { q:'Travaillez-vous uniquement avec Shopify?',
+        a:'Principalement Shopify et Shopify Plus, où nous avons le plus d\'expérience. Pour des projets très spécifiques, nous évaluons d\'autres plateformes.' },
+      { q:'Que comprend la gestion récurrente e-commerce?',
+        a:'Gestion du catalogue, campagnes, optimisation continue, rapports de performance, support technique et stratégique, et améliorations itératives basées sur les données.' },
+    ]
+  },
+  pt:{
+    hbSub:'Agência de Gestão de E-commerce',
+    navInicio:'Início', navServicios:'Serviços', navSoluciones:'Soluções',
+    navCalc:'Calculadora', navFaqs:"FAQ's", navContacto:'Contato',
+    navCta:'Vamos trabalhar juntos', navCtaSm:'Contato',
+    heroL1:'Fazemos o seu negócio',
+    heroL2:'vender mais online, com a',
+    heroL3:'experiência de quem',
+    heroL4:'já fez isso antes.',
+    heroP:'Desenvolvemos lojas Shopify que convertem, gerenciamos e-commerce com critério real e aplicamos IA para acelerar o que antes levava semanas.',
+    heroCta:'Vamos falar do seu projeto', heroGhost:'Ver serviços',
+    stat1:'Anos operando e-commerce próprio', stat2:'Projetos entregues',
+    stat3:'Continentes UK · USA · CH', stat4:'Clientes recorrentes',
+    fNameLabel:'Nome e Sobrenome', fEmailLabel:'Endereço de e-mail',
+    fPhoneLabel:'Número de telefone', fStoreLabel:'Link da sua Loja Online',
+    fRevenueLabel:'Faturamento mensal',
+    fFounderLabel:'Você é o fundador/a da marca?',
+    fProblemsLabel:'Quais problemas você está enfrentando na sua loja?',
+    fInvestLabel:'Você investiria +€6.000 para melhorar a conversão da sua loja com contrato?',
+    fNamePh:'João Silva', fEmailPh:'voce@loja.com',
+    fPhonePh:'+55 11 90000 0000', fStorePh:'https://sujaloja.com',
+    fProblemsPh:'Conversão baixa, muito tráfego mas poucas vendas, abandono de carrinho, ticket médio baixo...',
+    optSelect:'Selecionar...', optSelect2:'Selecionar', optSelect3:'Selecionar',
+    revLt5k:'Menos de €5.000/mês', rev5to15k:'€5.000 – €15.000/mês',
+    rev15to50k:'€15.000 – €50.000/mês', rev50to150k:'€50.000 – €150.000/mês',
+    rev150kPlus:'Mais de €150.000/mês',
+    founderYes:'Sim, sou o fundador/a',
+    founderMkt:'Não, sou responsável de marketing/e-commerce',
+    founderDir:'Faço parte da equipe de liderança', founderOther:'Outro cargo',
+    investYes:'Sim, se eu ver o ROI claro',
+    investMaybe:'Talvez, preciso de mais informações',
+    investNo:'Não tenho esse orçamento agora',
+    fSubmitBtn:'Enviar', fSendingBtn:'Enviando...', fWaBtn:'Enviar pelo WhatsApp',
+    fNote:'*Os botões desbloqueiam quando você preenche todos os campos',
+    fProofCopy:'A confiança das melhores marcas',
+    fSuccessTitle:'Mensagem recebida',
+    fSuccessDesc:'Respondemos em até 24h. Verifique sua caixa de entrada.',
+    footRights:'Todos os direitos reservados.',
+    faqs:[
+      { q:'Vocês fazem apenas Lojas Online?',
+        a:'Não. Também desenvolvemos sites corporativos, landing pages e aplicamos automação com IA a qualquer processo de e-commerce. Shopify é nossa especialidade, mas não o único serviço.' },
+      { q:'Quanto tempo leva para desenvolver a loja?',
+        a:'Depende do escopo, mas uma loja Shopify completa costuma ficar pronta em 3 a 6 semanas. Projetos maiores podem levar mais tempo, sempre com um cronograma claro.' },
+      { q:'Vocês podem gerenciar minha loja existente?',
+        a:'Sim. Muitos de nossos clientes nos contratam para otimizar, escalar ou gerenciar lojas existentes. Auditamos primeiro e propomos um plano de ação concreto.' },
+      { q:'Vocês trabalham apenas com Shopify?',
+        a:'Principalmente Shopify e Shopify Plus, onde temos mais experiência e melhores resultados. Para projetos específicos, avaliamos outras plataformas.' },
+      { q:'O que inclui a gestão recorrente de e-commerce?',
+        a:'Gestão de catálogo, campanhas, otimização contínua, relatórios de desempenho, suporte técnico e estratégico, e melhorias iterativas baseadas em dados.' },
+    ]
+  }
+};
+
+let currentLang = 'es';
+
+function detectLang(){
+  const nav = (navigator.language || navigator.userLanguage || 'es').toLowerCase().split('-')[0];
+  if(nav === 'en') return 'en';
+  if(nav === 'fr') return 'fr';
+  if(nav === 'pt') return 'pt';
+  return 'es';
+}
+
+function buildFaqs(faqs){
+  const container = document.getElementById('faq-messages');
+  if(!container) return;
+  container.innerHTML = '';
+  faqs.forEach(faq=>{
+    const qDiv = document.createElement('div');
+    qDiv.className = 'faq-q';
+    qDiv.innerHTML = `<div class="faq-q-bubble">${faq.q}</div><div class="faq-q-btn">+</div>`;
+    const aDiv = document.createElement('div');
+    aDiv.className = 'faq-a';
+    aDiv.innerHTML = `<div class="faq-avatar"><img src="assets/oryx-isotipo.png" alt="Oryx" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div><div class="faq-a-bubble">${faq.a}</div>`;
+    qDiv.addEventListener('click',()=>{
+      const isOpen = qDiv.classList.contains('active');
+      document.querySelectorAll('.faq-q.active').forEach(q=>{
+        q.classList.remove('active');
+        q.nextElementSibling.classList.remove('show');
+        q.querySelector('.faq-q-btn').textContent='+';
+      });
+      if(!isOpen){
+        qDiv.classList.add('active');
+        aDiv.classList.add('show');
+        qDiv.querySelector('.faq-q-btn').textContent='−';
+        gsap.from(aDiv,{opacity:0,y:8,duration:.3,ease:'power2.out'});
+      }
+    });
+    container.appendChild(qDiv);
+    container.appendChild(aDiv);
+  });
+}
+
+function applyLang(lang){
+  const T = TRANSLATIONS[lang] || TRANSLATIONS.es;
+  currentLang = lang;
+
+  /* data-i18n text */
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.dataset.i18n;
+    if(T[k] !== undefined) el.textContent = T[k];
+  });
+
+  /* data-i18n-ph placeholders */
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const k = el.dataset.i18nPh;
+    if(T[k] !== undefined) el.placeholder = T[k];
+  });
+
+  /* select option text */
+  document.querySelectorAll('[data-i18n-opt]').forEach(el=>{
+    const k = el.dataset.i18nOpt;
+    if(T[k] !== undefined) el.textContent = T[k];
+  });
+
+  /* rebuild FAQ */
+  buildFaqs(T.faqs);
+
+  /* update html lang attr */
+  document.documentElement.lang = lang;
+
+  /* update lang switcher active state */
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  /* store preference */
+  try{ localStorage.setItem('oryx-lang', lang); } catch(e){}
+}
+
+/* Language switcher clicks */
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=> applyLang(btn.dataset.lang));
+});
+
+/* Auto-detect on load */
+(function(){
+  let lang = 'es';
+  try{ lang = localStorage.getItem('oryx-lang') || detectLang(); } catch(e){ lang = detectLang(); }
+  applyLang(lang);
+})();
+
+/* FAQ is built by buildFaqs() called from applyLang() above */
+
+/* ── Form ───────────────────────────────── */
+(function(){
+  const form    = document.getElementById('contact-form');
+  const success = document.getElementById('f-success');
+  const btnSend = document.getElementById('f-submit');
+  const btnWa   = document.getElementById('f-submit-wa');
+  if(!form) return;
+
+  const required = [...form.querySelectorAll('[required]')];
+
+  function isComplete(){
+    return required.every(el => el.value.trim() !== '');
+  }
+
+  function syncBtns(){
+    const ok = isComplete();
+    btnSend.classList.toggle('ready', ok);
+    btnWa.classList.toggle('ready', ok);
+  }
+
+  required.forEach(el => {
+    el.addEventListener('input', syncBtns);
+    el.addEventListener('change', syncBtns);
+    if(el.tagName === 'SELECT'){
+      el.addEventListener('change', ()=> el.classList.toggle('has-val', el.value !== ''));
+    }
+  });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if(!isComplete()) return;
+
+    const T_cur = TRANSLATIONS[currentLang] || TRANSLATIONS.es;
+    btnSend.innerHTML = `<span>${T_cur.fSendingBtn||'Enviando...'}</span> &nbsp;→`;
+    btnSend.classList.remove('ready');
+
+    try{
+      const res = await fetch('/api/submit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          name:       form.name.value,
+          email:      form.email.value,
+          phone:      form.phone.value,
+          store:      form.store.value,
+          revenue:    form.revenue.value,
+          founder:    form.founder.value,
+          problems:   form.problems.value,
+          investment: form.investment.value,
+        })
+      });
+      if(res.ok){ showSuccess(); } else { throw new Error(); }
+    } catch{ showSuccess(); }
+  });
+
+  btnWa.addEventListener('click', () => {
+    if(!isComplete()) return;
+    const msg = encodeURIComponent(
+      `Hola Oryx Commerce 👋\n\n` +
+      `Nombre: ${form.name.value}\n` +
+      `Email: ${form.email.value}\n` +
+      `Teléfono: +34 ${form.phone.value}\n` +
+      `Tienda: ${form.store.value}\n` +
+      `Facturación: ${form.revenue.value}\n` +
+      `Problemas: ${form.problems.value}`
+    );
+    window.open(`https://wa.me/34600000000?text=${msg}`, '_blank');
+  });
+
+  function showSuccess(){
+    form.closest('.cta-form-card').style.display = 'none';
+    success.classList.add('show');
+    gsap.from(success,{opacity:0,y:16,duration:.5,ease:'power3.out'});
+  }
+})();
+
+})();
+</script>
+</body>
+</html>

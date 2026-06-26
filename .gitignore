@@ -1,0 +1,17 @@
+# Variables de entorno — NUNCA subir a GitHub
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel
+
+# Node
+node_modules/
+
+# Capturas y mockups de diseño (no son assets del sitio web)
+/*.png
+/*.jpg
+/*.jpeg
+/*.gif
+/*.webp
