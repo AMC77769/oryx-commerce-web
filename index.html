@@ -100,6 +100,8 @@ ul{list-style:none}
   mix-blend-mode:screen;
   position:relative;z-index:1;
   will-change:transform;
+  /* Always visible as fallback — GSAP overrides this if it loads */
+  opacity:1;
 }
 .pre-bar{
   width:200px;height:1px;background:var(--border);
@@ -1990,17 +1992,32 @@ ul{list-style:none}
 })();
 
 /* ── Preloader exit ─────────────────────── */
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    gsap.to('#preloader',{
-      opacity:0,scale:1.04,duration:.6,ease:'power2.inOut',
-      onComplete:()=>{
-        document.getElementById('preloader').style.display='none';
-        heroIn();
-      }
+function hidePreloader(){
+  const pre = document.getElementById('preloader');
+  if(!pre || pre.style.display==='none') return;
+  if(typeof gsap !== 'undefined'){
+    gsap.to(pre,{opacity:0,scale:1.04,duration:.55,ease:'power2.inOut',
+      onComplete:()=>{ pre.style.display='none'; heroIn(); }
     });
-  },1900);
-});
+  } else {
+    /* GSAP not available — CSS fallback */
+    pre.style.transition='opacity .55s ease';
+    pre.style.opacity='0';
+    setTimeout(()=>{ pre.style.display='none'; try{ heroIn(); }catch(e){} }, 600);
+  }
+}
+
+/* Normal exit: fire as soon as load event arrives */
+window.addEventListener('load',()=>{ setTimeout(hidePreloader, 800); });
+
+/* Failsafe 1: if load fires but GSAP failed, hide after 3s regardless */
+setTimeout(hidePreloader, 3000);
+
+/* Failsafe 2 (nuclear): always gone after 5s — no connection can be this slow */
+setTimeout(()=>{
+  const pre = document.getElementById('preloader');
+  if(pre){ pre.style.display='none'; try{ heroIn(); }catch(e){} }
+}, 5000);
 
 /* ── Hero entrance ───────────────────────── */
 function heroIn(){
