@@ -898,27 +898,6 @@ ul{list-style:none}
   .faq-q-bubble,.faq-a-bubble{font-size:13px;padding:10px 13px}
 }
 
-/* ── LANGUAGE SWITCHER ────────────────── */
-#lang-sw{
-  position:fixed;bottom:calc(var(--nav-h) + 18px);right:16px;
-  z-index:490;
-  display:flex;gap:4px;align-items:center;
-  background:rgba(13,13,13,.92);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:50px;padding:5px 8px;
-  box-shadow:0 4px 20px rgba(0,0,0,.4);
-  transition:opacity .2s;
-}
-#lang-sw.hidden{opacity:0;pointer-events:none}
-.lang-btn{
-  font-size:11px;font-weight:600;letter-spacing:.04em;
-  color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;
-  padding:4px 7px;border-radius:20px;font-family:'Inter',sans-serif;
-  transition:color .15s,background .15s;
-}
-.lang-btn:hover{color:#fff;background:rgba(255,255,255,.07)}
-.lang-btn.active{color:var(--green);background:rgba(0,194,110,.12)}
 
 /* ═══════════════════════════════════════════════
    MOBILE RESPONSIVE FIXES — max 599px (phones)
@@ -969,8 +948,6 @@ ul{list-style:none}
   .calc-card{ padding:18px 14px }
   .calc-results-col{ padding:14px }
 
-  /* Language switcher: move to left so it doesn't cover right-side content */
-  #lang-sw{ right:auto; left:16px }
 
   /* Contact section max-width full on mobile */
   #sec-contacto{ max-width:100% }
@@ -980,8 +957,6 @@ ul{list-style:none}
 @media(max-width:380px){
   .hero-h1{ font-size:25px }
   .h-stat-n{ font-size:22px }
-  /* Hide lang switcher on tiny screens — too cluttered */
-  #lang-sw{ display:none }
 }
 </style>
 </head>
@@ -1847,14 +1822,6 @@ ul{list-style:none}
   </a>
 </nav>
 
-<!-- ════════════ LANGUAGE SWITCHER ════════════ -->
-<div id="lang-sw" role="toolbar" aria-label="Language">
-  <span style="font-size:13px;margin-right:2px">🌐</span>
-  <button class="lang-btn active" data-lang="es">ES</button>
-  <button class="lang-btn" data-lang="en">EN</button>
-  <button class="lang-btn" data-lang="fr">FR</button>
-  <button class="lang-btn" data-lang="pt">PT</button>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
@@ -2603,20 +2570,12 @@ function applyLang(lang){
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
 
-  /* store preference */
-  try{ localStorage.setItem('oryx-lang', lang); } catch(e){}
 }
 
-/* Language switcher clicks */
-document.querySelectorAll('.lang-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=> applyLang(btn.dataset.lang));
-});
 
-/* Auto-detect on load */
+/* Auto-detect idioma por navegador/región */
 (function(){
-  let lang = 'es';
-  try{ lang = localStorage.getItem('oryx-lang') || detectLang(); } catch(e){ lang = detectLang(); }
-  applyLang(lang);
+  applyLang(detectLang());
 })();
 
 /* FAQ is built by buildFaqs() called from applyLang() above */
