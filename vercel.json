@@ -1,9 +1,3 @@
 {
-  "framework": null,
-  "outputDirectory": ".",
-  "functions": {
-    "api/*.js": {
-      "runtime": "@vercel/node@4"
-    }
-  }
+  "framework": null
 }
