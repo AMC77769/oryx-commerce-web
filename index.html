@@ -920,6 +920,69 @@ ul{list-style:none}
 }
 .lang-btn:hover{color:#fff;background:rgba(255,255,255,.07)}
 .lang-btn.active{color:var(--green);background:rgba(0,194,110,.12)}
+
+/* ═══════════════════════════════════════════════
+   MOBILE RESPONSIVE FIXES — max 599px (phones)
+   ═══════════════════════════════════════════════ */
+@media(max-width:599px){
+  /* More space so content isn't hidden under the fixed bottom nav */
+  body{ padding-bottom:calc(var(--nav-h) + 48px) }
+
+  /* Tighter section padding on phones */
+  .page-section{ padding:44px 16px }
+
+  /* Hero: reduce excessive top padding, make isotipo barely visible */
+  #sec-inicio{ padding-top:clamp(52px,9vh,80px); padding-bottom:32px }
+  .hero-iso-bg{ opacity:.06 !important; width:min(180px,50vw) !important }
+  .hero-h1{ font-size:clamp(27px,7.5vw,38px); letter-spacing:-.02em }
+  .hero-p{ font-size:14px; margin-bottom:24px }
+  .hero-btns{ margin-bottom:32px }
+  .h-stat{ padding:16px 14px }
+  .h-stat-n{ font-size:26px }
+
+  /* Sol cards → 1 column so text is readable */
+  .sol-cards{ grid-template-columns:1fr !important }
+  .sol-visual{ height:90px }
+  .sol-body{ padding:14px 14px 16px }
+  .sol-body h3{ font-size:14px }
+  .sol-body p{ font-size:12.5px }
+
+  /* Bento visuals: shorter on mobile */
+  .bento-visual{ height:80px }
+  .bento-card h3{ font-size:13.5px }
+  .bento-card p{ font-size:12px }
+
+  /* Services cards: slightly more compact */
+  .srv-card{ padding:13px 11px; gap:7px }
+  .srv-card p{ font-size:11px; line-height:1.5 }
+  .srv-body{ gap:30px }
+
+  /* Section header: tighter */
+  .section-header{ margin-bottom:24px }
+  .section-header h2{ font-size:clamp(24px,6.5vw,32px) }
+  .section-header p{ font-size:14px }
+
+  /* Methodology: full width panel on mobile */
+  .meto-intro{ font-size:13.5px; margin:10px 0 20px }
+
+  /* Calculator */
+  .calc-card{ padding:18px 14px }
+  .calc-results-col{ padding:14px }
+
+  /* Language switcher: move to left so it doesn't cover right-side content */
+  #lang-sw{ right:auto; left:16px }
+
+  /* Contact section max-width full on mobile */
+  #sec-contacto{ max-width:100% }
+}
+
+/* Extra small phones ≤ 380px */
+@media(max-width:380px){
+  .hero-h1{ font-size:25px }
+  .h-stat-n{ font-size:22px }
+  /* Hide lang switcher on tiny screens — too cluttered */
+  #lang-sw{ display:none }
+}
 </style>
 </head>
 <body>
