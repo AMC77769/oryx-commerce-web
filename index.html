@@ -958,6 +958,59 @@ ul{list-style:none}
   .hero-h1{ font-size:25px }
   .h-stat-n{ font-size:22px }
 }
+
+/* ── CUSTOM CURSOR ─────────────────────── */
+@media(pointer:fine){
+  *,*::before,*::after{cursor:none!important}
+}
+#cx-dot,#cx-ring{
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:99999;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  will-change:left,top;
+}
+#cx-dot{
+  width:5px;height:5px;
+  background:var(--green);
+  box-shadow:0 0 7px rgba(0,194,110,.85);
+  transition:width .18s var(--ease),height .18s var(--ease),opacity .18s;
+}
+#cx-ring{
+  width:34px;height:34px;
+  border:1.5px solid rgba(0,194,110,.5);
+  background:transparent;
+  box-shadow:0 0 12px rgba(0,194,110,.08);
+  transition:width .28s var(--ease),height .28s var(--ease),
+             background .28s,border-color .28s,opacity .28s;
+}
+body.cx-hover #cx-ring{
+  width:54px;height:54px;
+  background:rgba(0,194,110,.07);
+  border-color:rgba(0,194,110,.38);
+  box-shadow:0 0 20px rgba(0,194,110,.12);
+}
+body.cx-hover #cx-dot{
+  width:3px;height:3px;opacity:.5;
+}
+body.cx-click #cx-ring{
+  width:24px;height:24px;
+  background:rgba(0,194,110,.14);
+}
+body.cx-click #cx-dot{
+  width:7px;height:7px;
+}
+.cx-ripple{
+  position:fixed;pointer-events:none;z-index:99998;
+  border-radius:50%;
+  border:1px solid rgba(0,194,110,.55);
+  width:5px;height:5px;
+  transform:translate(-50%,-50%);
+  animation:cx-ripple .55s ease-out forwards;
+}
+@keyframes cx-ripple{
+  to{width:58px;height:58px;opacity:0;}
+}
 </style>
 </head>
 <body>
@@ -2654,6 +2707,65 @@ function applyLang(lang){
     success.classList.add('show');
     gsap.from(success,{opacity:0,y:16,duration:.5,ease:'power3.out'});
   }
+})();
+
+/* ── Custom cursor (solo desktop) ─────── */
+(function(){
+  if(!window.matchMedia('(pointer:fine)').matches) return;
+
+  var dot  = document.createElement('div');
+  var ring = document.createElement('div');
+  dot.id  = 'cx-dot';
+  ring.id = 'cx-ring';
+  document.body.appendChild(ring);
+  document.body.appendChild(dot);
+
+  var mx = innerWidth/2, my = innerHeight/2;
+  var rx = mx, ry = my;
+
+  document.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+  });
+
+  (function tick(){
+    rx += (mx - rx) * .11;
+    ry += (my - ry) * .11;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(tick);
+  })();
+
+  var HOVER = 'a,button,.nav-tab,.srv-card,.sol-card,.faq-q,.bento-card,.calc-pill,label,input,select,textarea,.nav-cta-btn,.btn-primary,.btn-ghost';
+
+  document.addEventListener('mouseover', function(e){
+    if(e.target.closest(HOVER)) document.body.classList.add('cx-hover');
+  });
+  document.addEventListener('mouseout', function(e){
+    if(e.target.closest(HOVER)) document.body.classList.remove('cx-hover');
+  });
+
+  document.addEventListener('mousedown', function(e){
+    document.body.classList.add('cx-click');
+    var r = document.createElement('div');
+    r.className = 'cx-ripple';
+    r.style.left = e.clientX + 'px';
+    r.style.top  = e.clientY + 'px';
+    document.body.appendChild(r);
+    setTimeout(function(){ if(r.parentNode) r.parentNode.removeChild(r); }, 600);
+  });
+  document.addEventListener('mouseup', function(){
+    document.body.classList.remove('cx-click');
+  });
+
+  /* Ocultar cursor cuando sale de la ventana */
+  document.addEventListener('mouseleave', function(){
+    dot.style.opacity = '0'; ring.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', function(){
+    dot.style.opacity = ''; ring.style.opacity = '';
+  });
 })();
 
 })();
