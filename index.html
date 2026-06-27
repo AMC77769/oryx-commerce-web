@@ -97,10 +97,7 @@ ul{list-style:none}
 }
 .pre-iso-wrap img{
   display:block;height:220px;width:auto;
-  mix-blend-mode:screen;
   position:relative;z-index:1;
-  will-change:transform;
-  /* Always visible as fallback — GSAP overrides this if it loads */
   opacity:1;
 }
 .pre-bar{
@@ -1799,7 +1796,7 @@ ul{list-style:none}
 <!-- ════════════ FOOTER ════════════ -->
 <footer id="sec-footer">
   <div class="foot-brand">
-    <img src="assets/oryx-horizontal.png" alt="Oryx Commerce" style="height:36px;width:auto;mix-blend-mode:screen;display:block">
+    <img src="assets/oryx-horizontal.png" alt="Oryx Commerce" style="height:36px;width:auto;display:block;opacity:.85">
   </div>
   <p class="foot-tagline">Built on experience. Sharpened by AI.</p>
   <div class="foot-links">
@@ -1977,7 +1974,8 @@ ul{list-style:none}
 (function(){
 
 /* ── Preloader entrance ─────────────────── */
-(function(){
+try{(function(){
+  if(typeof gsap==='undefined') return;
   const img = document.getElementById('pre-logo-img');
   const glow = document.getElementById('pre-glow');
   if(!img) return;
@@ -1989,34 +1987,60 @@ ul{list-style:none}
   })
   .to(glow,{opacity:1,scale:1.15,duration:.35,ease:'power2.out'},'-=.05')
   .to(glow,{opacity:.28,scale:1,duration:.9,ease:'sine.inOut'});
-})();
+})();}catch(e){}
+
+/* ── Hero emergency fallback (si GSAP no carga) ── */
+function heroEmergency(){
+  try{
+    ['#hero-brand','#hero-p','#hero-btns'].forEach(function(s){
+      var el=document.querySelector(s);
+      if(el){el.style.transition='opacity .4s ease';el.style.opacity='1';el.style.transform='none';}
+    });
+    document.querySelectorAll('.word-inner').forEach(function(el){
+      el.style.transition='transform .5s ease';el.style.transform='translateY(0) rotateX(0)';
+    });
+    document.querySelectorAll('.h-stat').forEach(function(el){
+      el.style.transition='opacity .4s ease,transform .4s ease';
+      el.style.opacity='1';el.style.transform='none';
+    });
+  }catch(e2){}
+}
+
+function heroSafe(){
+  try{ heroIn(); }catch(e){ heroEmergency(); }
+}
 
 /* ── Preloader exit ─────────────────────── */
+var _preHidden = false;
 function hidePreloader(){
-  const pre = document.getElementById('preloader');
-  if(!pre || pre.style.display==='none') return;
+  if(_preHidden) return;
+  _preHidden = true;
+  var pre = document.getElementById('preloader');
+  if(!pre){ heroSafe(); return; }
   if(typeof gsap !== 'undefined'){
     gsap.to(pre,{opacity:0,scale:1.04,duration:.55,ease:'power2.inOut',
-      onComplete:()=>{ pre.style.display='none'; heroIn(); }
+      onComplete:function(){ pre.style.display='none'; heroSafe(); }
     });
   } else {
-    /* GSAP not available — CSS fallback */
     pre.style.transition='opacity .55s ease';
     pre.style.opacity='0';
-    setTimeout(()=>{ pre.style.display='none'; try{ heroIn(); }catch(e){} }, 600);
+    setTimeout(function(){ pre.style.display='none'; heroSafe(); }, 600);
   }
 }
 
 /* Normal exit: fire as soon as load event arrives */
-window.addEventListener('load',()=>{ setTimeout(hidePreloader, 800); });
+window.addEventListener('load',function(){ setTimeout(hidePreloader, 800); });
 
-/* Failsafe 1: if load fires but GSAP failed, hide after 3s regardless */
+/* Failsafe: hide after 3s regardless */
 setTimeout(hidePreloader, 3000);
 
-/* Failsafe 2 (nuclear): always gone after 5s — no connection can be this slow */
-setTimeout(()=>{
-  const pre = document.getElementById('preloader');
-  if(pre){ pre.style.display='none'; try{ heroIn(); }catch(e){} }
+/* Nuclear failsafe: siempre eliminado a los 5s */
+setTimeout(function(){
+  if(!_preHidden){
+    var pre = document.getElementById('preloader');
+    if(pre) pre.style.display='none';
+    heroSafe();
+  }
 }, 5000);
 
 /* ── Hero entrance ───────────────────────── */
