@@ -9,6 +9,10 @@
 # Node
 node_modules/
 
+# Playwright screenshots y temp files
+.playwright-mcp/
+*.jpeg
+
 # Capturas y mockups de diseño (no son assets del sitio web)
 /*.png
 /*.jpg

@@ -942,10 +942,11 @@ ul{list-style:none}
 
   /* Sol cards → 1 column so text is readable */
   .sol-cards{ grid-template-columns:1fr !important }
-  .sol-visual{ height:90px }
-  .sol-body{ padding:14px 14px 16px }
-  .sol-body h3{ font-size:14px }
-  .sol-body p{ font-size:12.5px }
+  /* Hide mini-animations on mobile — save space, avoid empty grey boxes */
+  .sol-visual{ display:none }
+  .sol-body{ padding:16px 16px 18px }
+  .sol-body h3{ font-size:15px }
+  .sol-body p{ font-size:13px }
 
   /* Bento visuals: shorter on mobile */
   .bento-visual{ height:80px }
